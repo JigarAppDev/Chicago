@@ -98,8 +98,8 @@ class DetailsViewController: UIViewController, MFMailComposeViewControllerDelega
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients([self.selectedObj["Client_Subbmission_link"].stringValue])
-            mail.setSubject("Hello!")
-            mail.setMessageBody("<p>You're so awesome!</p>", isHTML: true)
+            mail.setSubject("Chicago Callsheet Referral")
+            //mail.setMessageBody("<p>You're so awesome!</p>", isHTML: true)
             present(mail, animated: true)
         }
     }

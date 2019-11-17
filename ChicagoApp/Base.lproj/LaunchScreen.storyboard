@@ -19,13 +19,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_splesh" translatesAutoresizingMaskIntoConstraints="NO" id="RGY-dY-Ezx">
-                                <rect key="frame" x="50" y="59" width="220" height="350"/>
+                                <rect key="frame" x="50" y="46.5" width="220" height="375"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="350" id="s8C-C5-4bH"/>
+                                    <constraint firstAttribute="height" constant="375" id="s8C-C5-4bH"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ooB-ic-xFA" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="4dd-Ji-eZI"/>
                             <constraint firstAttribute="bottom" secondItem="ooB-ic-xFA" secondAttribute="bottom" id="5IN-lY-bYX"/>
