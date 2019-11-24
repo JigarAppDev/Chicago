@@ -12,6 +12,7 @@ import SDWebImage
 import MessageUI
 import CoreLocation
 import MapKit
+import CoreData
 
 class DetailsViewController: UIViewController, MFMailComposeViewControllerDelegate {
 
@@ -28,10 +29,13 @@ class DetailsViewController: UIViewController, MFMailComposeViewControllerDelega
     @IBOutlet var emailViewHeight: NSLayoutConstraint!
     @IBOutlet var imgMap: UIImageView!
     var selectedObj: JSON!
+    var likedObjArr = [JSON]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.getAllSavedData()
+        
         // Do any additional setup after loading the view.
         self.lblTitle.text = self.selectedObj["Company_name"].stringValue
         self.lblName.text = self.selectedObj["Company_name"].stringValue
@@ -61,9 +65,72 @@ class DetailsViewController: UIViewController, MFMailComposeViewControllerDelega
         if sender.isSelected == false {
             self.btnLike.setImage(UIImage.init(named: "like_icon"), for: .normal)
             sender.isSelected = true
+            self.saveObjInUD()
         } else {
             self.btnLike.setImage(UIImage.init(named: "disable_like_icon"), for: .normal)
             sender.isSelected = false
+            self.removeSavedObjInID()
+        }
+    }
+    
+    func getAllSavedData() {
+        //Core Data
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        let context = appDel.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "LikesTable")
+        request.predicate = NSPredicate(format: "id = %@", self.selectedObj["id"].stringValue)
+        request.returnsObjectsAsFaults = false
+        do {
+            if let result = try? context.fetch(request) {
+                if result.count > 0 {
+                    self.btnLike.setImage(UIImage.init(named: "like_icon"), for: .normal)
+                    self.btnLike.isSelected = true
+                }
+            }
+            
+        } catch {
+            print("Failed")
+        }
+    }
+    
+    func saveObjInUD() {
+        //Core Data
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        let context = appDel.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "LikesTable", in: context)
+        let newData = NSManagedObject(entity: entity!, insertInto: context)
+        newData.setValue(self.selectedObj["id"].intValue, forKey: "id")
+        newData.setValue(self.selectedObj["Company_name"].stringValue, forKey: "company_name")
+        newData.setValue(self.selectedObj["three_sentence_summary"].stringValue, forKey: "three_sentence_summary")
+        newData.setValue(self.selectedObj["Client_Subbmission_link"].stringValue, forKey: "client_subbmission_link")
+        newData.setValue(self.selectedObj["Phone"].stringValue, forKey: "phone")
+        newData.setValue(self.selectedObj["Address"].stringValue, forKey: "address")
+        newData.setValue(self.selectedObj["Website"].stringValue, forKey: "website")
+        
+        do {
+           try context.save()
+          } catch {
+           print("Failed saving")
+        }
+    }
+    
+    func removeSavedObjInID() {
+        
+        //Core Data
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        let context = appDel.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "LikesTable")
+        request.predicate = NSPredicate(format: "id = %@", self.selectedObj["id"].stringValue)
+        request.returnsObjectsAsFaults = false
+        do {
+            if let result = try? context.fetch(request) {
+                for object in result {
+                    context.delete(object as! NSManagedObject)
+                }
+            }
+            
+        } catch {
+            print("Failed")
         }
     }
     
@@ -143,4 +210,73 @@ class DetailsViewController: UIViewController, MFMailComposeViewControllerDelega
             mapItem.openInMaps(launchOptions: options)
         }
     }
+    
+    func archiveWidgetDataArray(likeDataArray : [JSON]) -> Data {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: likeDataArray, requiringSecureCoding: false)
+
+            return data
+        } catch {
+            fatalError("Can't encode data: \(error)")
+        }
+    }
+
+    func loadWidgetDataArray() -> [JSON]? {
+        guard
+            let unarchivedObject = UserDefaults.standard.data(forKey: "likeData")
+        else {
+            return nil
+        }
+        do {
+            guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(unarchivedObject) as? [JSON] else {
+                fatalError("loadWidgetDataArray - Can't get Array")
+            }
+            return array
+        } catch {
+            fatalError("loadWidgetDataArray - Can't encode data: \(error)")
+        }
+    }
 }
+
+class LikeObject: NSObject {
+
+    var likeId: Int
+    var Company_name: String
+    var three_sentence_summary: String
+    var Client_Subbmission_link: String
+    var Phone: String
+    var Address: String
+    var Website: String
+    
+    init(lid: Int, cname: String, summary: String, link: String, phone: String, addr: String, website: String){
+        self.likeId = lid
+        self.Company_name = cname
+        self.three_sentence_summary = summary
+        self.Client_Subbmission_link = link
+        self.Phone = phone
+        self.Address = addr
+        self.Website = website
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        self.likeId = aDecoder.decodeInteger(forKey: "id")
+        self.Company_name = aDecoder.decodeObject(forKey:"Company_name") as! String
+        self.three_sentence_summary = aDecoder.decodeObject(forKey: "three_sentence_summary") as! String
+        self.Client_Subbmission_link = aDecoder.decodeObject(forKey: "Client_Subbmission_link") as! String
+        self.Phone = aDecoder.decodeObject(forKey: "Phone") as! String
+        self.Address = aDecoder.decodeObject(forKey: "Address") as! String
+        self.Website = aDecoder.decodeObject(forKey: "Website") as! String
+    }
+
+    func encodeWithCoder(aCoder: NSCoder!) {
+        aCoder.encode(likeId, forKey: "id")
+        aCoder.encode(Company_name, forKey: "Company_name")
+        aCoder.encode(three_sentence_summary, forKey: "three_sentence_summary")
+        aCoder.encode(Client_Subbmission_link, forKey: "Client_Subbmission_link")
+        aCoder.encode(Phone, forKey: "Phone")
+        aCoder.encode(Address, forKey: "Address")
+        aCoder.encode(Website, forKey: "Website")
+    }
+
+}
+

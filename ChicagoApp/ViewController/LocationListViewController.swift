@@ -68,6 +68,20 @@ class LocationListViewController: UIViewController {
             }
         }.resume()
     }
+    
+    //MARK: TV Click
+    @IBAction func btnTVClick(sender: UIButton) {
+        if let webURL = URL(string: "https://www.chicagocallsheet.com/"), UIApplication.shared.canOpenURL(webURL)
+        {
+            UIApplication.shared.open(webURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    //MARK: Get Liked Data
+    @IBAction func btnLikeClick(sender: UIButton) {
+        let likeVC = self.storyboard?.instantiateViewController(identifier: "LikedCategoryViewController") as! LikedCategoryViewController
+        self.navigationController?.pushViewController(likeVC, animated: true)
+    }
 }
 
 extension LocationListViewController: UITableViewDelegate, UITableViewDataSource {

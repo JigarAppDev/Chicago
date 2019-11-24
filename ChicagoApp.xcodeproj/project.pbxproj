@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0443724B238A5344006571A9 /* ChicagoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04437249238A5344006571A9 /* ChicagoApp.xcdatamodeld */; };
+		0444A4B223897DE8009DDA41 /* LikedCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0444A4B123897DE8009DDA41 /* LikedCategoryViewController.swift */; };
 		047EF0452379B933004B5CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047EF0442379B933004B5CC6 /* AppDelegate.swift */; };
 		047EF0472379B933004B5CC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047EF0462379B933004B5CC6 /* SceneDelegate.swift */; };
 		047EF0492379B933004B5CC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047EF0482379B933004B5CC6 /* ViewController.swift */; };
@@ -57,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0443724A238A5344006571A9 /* ChicagoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChicagoApp.xcdatamodel; sourceTree = "<group>"; };
+		0444A4B123897DE8009DDA41 /* LikedCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedCategoryViewController.swift; sourceTree = "<group>"; };
 		047EF0412379B933004B5CC6 /* Chicago Callsheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chicago Callsheet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		047EF0442379B933004B5CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		047EF0462379B933004B5CC6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				047EF04D2379B934004B5CC6 /* Assets.xcassets */,
 				047EF04F2379B934004B5CC6 /* LaunchScreen.storyboard */,
 				047EF0522379B934004B5CC6 /* Info.plist */,
+				04437249238A5344006571A9 /* ChicagoApp.xcdatamodeld */,
 			);
 			path = ChicagoApp;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 				047EF0772379BD4C004B5CC6 /* CategoryViewController.swift */,
 				047EF0792379BD7F004B5CC6 /* LocationListViewController.swift */,
 				047EF07B2379BD8F004B5CC6 /* DetailsViewController.swift */,
+				0444A4B123897DE8009DDA41 /* LikedCategoryViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -434,6 +440,7 @@
 				048F9ECA237C259800150D4A /* DispatchQueue.swift in Sources */,
 				048F9EC8237C259800150D4A /* String+Extensions.swift in Sources */,
 				048F9ED1237C259800150D4A /* UITextField+Extensions.swift in Sources */,
+				0444A4B223897DE8009DDA41 /* LikedCategoryViewController.swift in Sources */,
 				048F9ECD237C259800150D4A /* Optional+Extensions.swift in Sources */,
 				048F9ECB237C259800150D4A /* UITableView+Extensions.swift in Sources */,
 				047EF0492379B933004B5CC6 /* ViewController.swift in Sources */,
@@ -441,6 +448,7 @@
 				048F9EC2237C259800150D4A /* HttpRequestManager.swift in Sources */,
 				048F9EC5237C259800150D4A /* Int+Extensions.swift in Sources */,
 				048F9EC3237C259800150D4A /* Constant.swift in Sources */,
+				0443724B238A5344006571A9 /* ChicagoApp.xcdatamodeld in Sources */,
 				048F9ED0237C259800150D4A /* UIView+ReusableIdentifier.swift in Sources */,
 				048F9ECE237C259800150D4A /* Date+Extensions.swift in Sources */,
 				048F9EC6237C259800150D4A /* UIViewController+Extensions.swift in Sources */,
@@ -786,6 +794,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		04437249238A5344006571A9 /* ChicagoApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0443724A238A5344006571A9 /* ChicagoApp.xcdatamodel */,
+			);
+			currentVersion = 0443724A238A5344006571A9 /* ChicagoApp.xcdatamodel */;
+			path = ChicagoApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 047EF0392379B933004B5CC6 /* Project object */;
 }
