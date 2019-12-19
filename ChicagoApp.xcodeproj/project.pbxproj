@@ -39,6 +39,10 @@
 		048F9ED0237C259800150D4A /* UIView+ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048F9EB9237C259800150D4A /* UIView+ReusableIdentifier.swift */; };
 		048F9ED1237C259800150D4A /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048F9EBA237C259800150D4A /* UITextField+Extensions.swift */; };
 		4C7F3752C03C910AD7F69706 /* Pods_ChicagoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6494F10FEE4602DE6B81C033 /* Pods_ChicagoApp.framework */; };
+		E201434B23AB5DE8004A9B94 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201434A23AB5DE8004A9B94 /* LoginViewController.swift */; };
+		E201434D23AB5DF5004A9B94 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201434C23AB5DF5004A9B94 /* SignUpViewController.swift */; };
+		E201434F23AB5E11004A9B94 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */; };
+		E201435123AB5E20004A9B94 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +103,10 @@
 		6494F10FEE4602DE6B81C033 /* Pods_ChicagoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChicagoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9719CE9940A8E32A207814B /* Pods-ChicagoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChicagoApp.release.xcconfig"; path = "Target Support Files/Pods-ChicagoApp/Pods-ChicagoApp.release.xcconfig"; sourceTree = "<group>"; };
 		DA6AF806316A51DD91A5B3C1 /* Pods-ChicagoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChicagoApp.debug.xcconfig"; path = "Target Support Files/Pods-ChicagoApp/Pods-ChicagoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		E201434A23AB5DE8004A9B94 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E201434C23AB5DF5004A9B94 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +196,7 @@
 		047EF0742379BAD4004B5CC6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E201434923AB5DD6004A9B94 /* LoginSignUp */,
 				047EF0752379BAE3004B5CC6 /* HomeViewController.swift */,
 				047EF0772379BD4C004B5CC6 /* CategoryViewController.swift */,
 				047EF0792379BD7F004B5CC6 /* LocationListViewController.swift */,
@@ -259,6 +268,17 @@
 				D9719CE9940A8E32A207814B /* Pods-ChicagoApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E201434923AB5DD6004A9B94 /* LoginSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				E201434A23AB5DE8004A9B94 /* LoginViewController.swift */,
+				E201434C23AB5DF5004A9B94 /* SignUpViewController.swift */,
+				E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */,
+				E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */,
+			);
+			path = LoginSignUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,7 +456,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E201434B23AB5DE8004A9B94 /* LoginViewController.swift in Sources */,
 				047EF0782379BD4C004B5CC6 /* CategoryViewController.swift in Sources */,
+				E201434F23AB5E11004A9B94 /* ResetPasswordViewController.swift in Sources */,
 				048F9ECA237C259800150D4A /* DispatchQueue.swift in Sources */,
 				048F9EC8237C259800150D4A /* String+Extensions.swift in Sources */,
 				048F9ED1237C259800150D4A /* UITextField+Extensions.swift in Sources */,
@@ -457,8 +479,10 @@
 				047EF0472379B933004B5CC6 /* SceneDelegate.swift in Sources */,
 				048F9EC4237C259800150D4A /* Array+Extensions.swift in Sources */,
 				048F9EC9237C259800150D4A /* UIAlertController+Extensions.swift in Sources */,
+				E201434D23AB5DF5004A9B94 /* SignUpViewController.swift in Sources */,
 				048F9ECF237C259800150D4A /* UIView+Nib.swift in Sources */,
 				048F9EBB237C259800150D4A /* WebService-Prefix.swift in Sources */,
+				E201435123AB5E20004A9B94 /* ForgotPasswordViewController.swift in Sources */,
 				047EF07C2379BD8F004B5CC6 /* DetailsViewController.swift in Sources */,
 				047EF07A2379BD7F004B5CC6 /* LocationListViewController.swift in Sources */,
 				047EF0762379BAE3004B5CC6 /* HomeViewController.swift in Sources */,

@@ -62,6 +62,12 @@ class HomeViewController: UIViewController {
         }.resume()
     }
     
+    //MARK: Login Click
+    @IBAction func btnLoginClick(sender: UIButton) {
+        let loginVC = self.storyboard?.instantiateViewController(identifier: "LoginViewController") as! LoginViewController
+        self.navigationController?.pushViewController(loginVC, animated: true)
+    }
+    
     //MARK: TV Click
     @IBAction func btnTVClick(sender: UIButton) {
         if let webURL = URL(string: "https://www.chicagocallsheet.com/"), UIApplication.shared.canOpenURL(webURL)
