@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
+//import FBSDKLoginKit
+//import GoogleSignIn
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
+        //configGoogleFacebook(launchOptions: launchOptions, application: application)
         return true
     }
 
@@ -77,6 +81,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    //MARK: - Google - Facebook Config Method
+    func configGoogleFacebook(launchOptions : [UIApplication.LaunchOptionsKey: Any]?, application : UIApplication) {
+        //GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        //ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        //return ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        // First, handle Facebook URL open request
+        /*if let fbSDKAppId = Settings.appID, url.scheme!.hasPrefix("fb\(fbSDKAppId)"), url.host == "authorize" {
+         let shouldOpen: Bool = ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as! String!, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+         return shouldOpen
+         }*/
+        
+        return true
     }
 }
 

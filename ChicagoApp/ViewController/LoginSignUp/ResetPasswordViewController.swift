@@ -10,6 +10,10 @@ import UIKit
 
 class ResetPasswordViewController: UIViewController {
 
+    @IBOutlet var txtOTP: UITextField!
+    @IBOutlet var txtPassword: UITextField!
+    @IBOutlet var txtConfirmPassword: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

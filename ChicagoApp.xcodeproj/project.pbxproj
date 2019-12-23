@@ -43,6 +43,7 @@
 		E201434D23AB5DF5004A9B94 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201434C23AB5DF5004A9B94 /* SignUpViewController.swift */; };
 		E201434F23AB5E11004A9B94 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */; };
 		E201435123AB5E20004A9B94 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */; };
+		E2317CC223B0B3220024393A /* AddShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2317CC123B0B3220024393A /* AddShopViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		E201434C23AB5DF5004A9B94 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		E2317CC123B0B3220024393A /* AddShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShopViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 				047EF0792379BD7F004B5CC6 /* LocationListViewController.swift */,
 				047EF07B2379BD8F004B5CC6 /* DetailsViewController.swift */,
 				0444A4B123897DE8009DDA41 /* LikedCategoryViewController.swift */,
+				E2317CC123B0B3220024393A /* AddShopViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E201434B23AB5DE8004A9B94 /* LoginViewController.swift in Sources */,
+				E2317CC223B0B3220024393A /* AddShopViewController.swift in Sources */,
 				047EF0782379BD4C004B5CC6 /* CategoryViewController.swift in Sources */,
 				E201434F23AB5E11004A9B94 /* ResetPasswordViewController.swift in Sources */,
 				048F9ECA237C259800150D4A /* DispatchQueue.swift in Sources */,

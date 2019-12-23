@@ -35,4 +35,14 @@ class SignUpViewController: UIViewController {
     @IBAction func btnSignUpClick(sender: UIButton) {
         
     }
+    
+    //MARK: Facebook Login Click
+    @IBAction func btnFBLoginClick(sender: UIButton) {
+        
+    }
+    
+    //MARK: Google Login Click
+    @IBAction func btnGoogleLoginClick(sender: UIButton) {
+        
+    }
 }
