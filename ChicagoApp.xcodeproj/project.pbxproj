@@ -296,6 +296,7 @@
 				047EF03E2379B933004B5CC6 /* Frameworks */,
 				047EF03F2379B933004B5CC6 /* Resources */,
 				4878E703274EB1251D809D7D /* [CP] Embed Pods Frameworks */,
+				7CCBD02142814453C55DA793 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -450,6 +451,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChicagoApp/Pods-ChicagoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7CCBD02142814453C55DA793 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChicagoApp/Pods-ChicagoApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChicagoApp/Pods-ChicagoApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChicagoApp/Pods-ChicagoApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

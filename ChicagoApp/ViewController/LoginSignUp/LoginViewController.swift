@@ -7,13 +7,14 @@
 //
 
 import UIKit
-/*import KSToastView
+import SwiftyJSON
+import KSToastView
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
-import NVActivityIndicatorView*/
+import NVActivityIndicatorView
 
-class LoginViewController: UIViewController { //GIDSignInDelegate, GIDSignInUIDelegate, NVActivityIndicatorViewable
+class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GIDSignInDelegate, GIDSignInUIDelegate,
 
     @IBOutlet var txtEmail: UITextField!
     @IBOutlet var txtPassword: UITextField!
@@ -43,7 +44,47 @@ class LoginViewController: UIViewController { //GIDSignInDelegate, GIDSignInUIDe
     
     //MARK: Login Click
     @IBAction func btnLoginClick(sender: UIButton) {
+        if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            KSToastView.ks_showToast("Please Enter Email!", duration: ToastDuration)
+            return
+        }else if self.txtPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            KSToastView.ks_showToast("Please Enter Password", duration: ToastDuration)
+            return
+        }
+        startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
+        let deviceId = UIDevice.current.identifierForVendor!.uuidString
+        let Url = String(format: APIConstants.LOGIN)
+        guard let serviceUrl = URL(string: Url) else { return }
+        var request = URLRequest(url: serviceUrl)
+        request.httpMethod = "POST"
+        let paramString = "email=\(self.txtEmail.text!)&password=\(self.txtPassword.text!)&device_token=123456789&device_type=ios&device_id=\(deviceId)"
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            self.dismiss(animated: true, completion: nil)
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    let dataObj = json as! NSDictionary
+                    if dataObj.value(forKey: "status_code") as! Bool == true {
+                        print(dataObj)
+                    }
+                    let dataObj1 = JSON.init(json)
+                    if dataObj1["status_code"].boolValue == true {
+                        print(dataObj1)
+                    }
+                    DispatchQueue.main.async {
+                        //self.tblMainCat.reloadData()
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
     }
     
     //MARK: Facebook Login Click

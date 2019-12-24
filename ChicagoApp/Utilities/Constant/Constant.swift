@@ -17,6 +17,9 @@ let APPName = "Chicago"
 let EUSER = "UserInfo"
 let ETOKEN = "UserToken"
 
+let Loadersize = CGSize(width: 40, height: 40)
+var ToastDuration:TimeInterval = 2.0
+
 struct ValidationMessage {
     static let Username = "Please enter username"
     static let Email = "Please enter email"

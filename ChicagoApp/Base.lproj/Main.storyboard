@@ -149,7 +149,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film_thumb" translatesAutoresizingMaskIntoConstraints="NO" id="vzU-4c-fa1">
-                                        <rect key="frame" x="137.5" y="10" width="45.000000000000114" height="45"/>
+                                        <rect key="frame" x="137.5" y="10" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="ADT-PZ-UfZ"/>
                                             <constraint firstAttribute="width" constant="45" id="Oxv-VK-oMG"/>
@@ -356,7 +356,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film_thumb" translatesAutoresizingMaskIntoConstraints="NO" id="s8h-Te-SM5">
-                                        <rect key="frame" x="137.5" y="10" width="45.000000000000114" height="45"/>
+                                        <rect key="frame" x="137.5" y="10" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="45" id="0R0-1q-gep"/>
                                             <constraint firstAttribute="height" constant="45" id="mIQ-5J-603"/>
@@ -499,7 +499,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_icon" translatesAutoresizingMaskIntoConstraints="NO" id="wrK-ZU-jWe">
-                                                            <rect key="frame" x="25" y="37.5" width="25" height="45"/>
+                                                            <rect key="frame" x="25" y="15" width="25" height="90"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="6PW-bh-pJA"/>
                                                             </constraints>
@@ -583,7 +583,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film_thumb" translatesAutoresizingMaskIntoConstraints="NO" id="V1K-qa-NsI">
-                                        <rect key="frame" x="137.5" y="10" width="45.000000000000114" height="45"/>
+                                        <rect key="frame" x="137.5" y="10" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="45" id="G20-68-ulj"/>
                                             <constraint firstAttribute="height" constant="45" id="b0b-y8-bpf"/>
@@ -1454,7 +1454,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="niI-ld-sS1">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="EdW-az-iO3"/>
                                                                     <constraint firstAttribute="width" constant="20" id="pjX-7T-6br"/>
@@ -1749,7 +1749,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="sBu-hv-dfB">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="0MJ-Ie-8A5"/>
                                                                     <constraint firstAttribute="width" constant="20" id="Ryj-zA-EIO"/>
@@ -1844,7 +1844,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="a4e-Ab-mcs">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="20" id="5ey-IW-3JF"/>
                                                                     <constraint firstAttribute="height" constant="10" id="QrW-xU-c04"/>
@@ -2008,7 +2008,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="city_bg" translatesAutoresizingMaskIntoConstraints="NO" id="bMK-DC-AXQ">
-                                <rect key="frame" x="0.0" y="576" width="320" height="92.000000000000057"/>
+                                <rect key="frame" x="0.0" y="576" width="320" height="92"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="92" id="y9q-yZ-qLA"/>
                                 </constraints>
@@ -2321,7 +2321,7 @@ New password.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="7bV-J9-Ysb">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="5CI-2K-1GB"/>
                                                                     <constraint firstAttribute="width" constant="20" id="ElS-ra-HTZ"/>
@@ -2391,7 +2391,7 @@ New password.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="ay3-63-ZcG">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="4bR-Yw-U7b"/>
                                                                     <constraint firstAttribute="width" constant="20" id="SpV-my-Pdq"/>

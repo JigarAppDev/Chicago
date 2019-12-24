@@ -26,6 +26,10 @@ struct APIServerConstants {
 }
 
 struct APIConstants {
+    static let LOGIN = "\(APIServerConstants.BaseURL)login"
+    static let SIGNUP = "\(APIServerConstants.BaseURL)signup"
+    static let FORGOTPWD = "\(APIServerConstants.BaseURL)forgot_password"
+    static let RESETPWD = "\(APIServerConstants.BaseURL)reset_password"
     static let GetCategory = "\(APIServerConstants.BaseURL)get_category"
     static let GetCategoryDetails = "\(APIServerConstants.BaseURL)get_profile"
 }
