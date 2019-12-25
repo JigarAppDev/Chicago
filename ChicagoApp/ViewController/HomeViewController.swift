@@ -17,12 +17,23 @@ class MainCatCell: UITableViewCell {
 class HomeViewController: UIViewController {
 
     @IBOutlet var tblMainCat: UITableView!
+    @IBOutlet var btnLoginNow: UIButton!
     var arrMainCategory = [JSON]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.getAllMainCategory()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.btnLoginNow.isHidden = false
+        if let _ = Defaults.value(forKey: "userDetail") {
+            //LoggedIn
+            self.btnLoginNow.isHidden = true
+        }
     }
     
     //MARK: Main Category API Call

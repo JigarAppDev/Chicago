@@ -11,11 +11,12 @@ import UIKit
 class ForgotPasswordViewController: UIViewController {
 
     @IBOutlet var txtEmail: UITextField!
+    var toast: JYToast!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.toast = JYToast()
     }
     
     // MARK: - Back Click

@@ -13,11 +13,12 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet var txtOTP: UITextField!
     @IBOutlet var txtPassword: UITextField!
     @IBOutlet var txtConfirmPassword: UITextField!
+    var toast: JYToast!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.toast = JYToast()
     }
 
     // MARK: - Back Click

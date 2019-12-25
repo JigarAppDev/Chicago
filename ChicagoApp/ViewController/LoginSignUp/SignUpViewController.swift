@@ -20,11 +20,16 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet var txtEmail: UITextField!
     @IBOutlet var txtPassword: UITextField!
     @IBOutlet var txtConfirmPassword: UITextField!
+    private var toast: JYToast!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.initUi()
+    }
+        
+    private func initUi() {
+        toast = JYToast()
     }
 
     // MARK: - Back Click
@@ -37,22 +42,30 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
         self.navigationController?.popViewController(animated: true)
     }
     
+    func isValidated() -> Bool {
+        var isFlag = true
+        if self.txtFullname.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            self.toast.isShow("Please Enter Your Fullname!")
+            isFlag = false
+        }else if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            self.toast.isShow("Please Enter Your Email!")
+            isFlag = false
+        }else if self.txtPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            self.toast.isShow("Please Enter Your Password!")
+            isFlag = false
+        }else if self.txtConfirmPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            self.toast.isShow("Please Enter Your Confirm Password!")
+            isFlag = false
+        }else if self.txtPassword.text! != self.txtConfirmPassword.text! {
+            self.toast.isShow("Your password is mismatch!")
+            isFlag = false
+        }
+        return isFlag
+    }
+    
     //MARK: Sign Up Click
     @IBAction func btnSignUpClick(sender: UIButton) {
-        if self.txtFullname.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            KSToastView.ks_showToast("Please Enter Your Fullname!", duration: ToastDuration)
-            return
-        }else if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            KSToastView.ks_showToast("Please Enter Your Email!", duration: ToastDuration)
-            return
-        }else if self.txtPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            KSToastView.ks_showToast("Please Enter Your Password!", duration: ToastDuration)
-            return
-        }else if self.txtConfirmPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            KSToastView.ks_showToast("Please Enter Your Confirm Password!", duration: ToastDuration)
-            return
-        }else if self.txtPassword.text! != self.txtConfirmPassword.text! {
-            KSToastView.ks_showToast("Your password is mismatch!", duration: ToastDuration)
+        if !self.isValidated() {
             return
         }
         self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
@@ -66,7 +79,7 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
         
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
-            self.dismiss(animated: true, completion: nil)
+            self.stopAnimating()
             if let response = response {
                 print(response)
             }
@@ -81,8 +94,16 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
                     if dataObj1["status_code"].boolValue == true {
                         print(dataObj1)
                     }
+                    let data : JSON = JSON.init(dataObj1["data"])
+                    guard let rowdata = try? data.rawData() else {return}
+                    Defaults.setValue(rowdata, forKey: "userDetail")
+                    Defaults.synchronize()
                     DispatchQueue.main.async {
-                        //self.tblMainCat.reloadData()
+                        for vw in self.navigationController!.viewControllers {
+                            if vw.isKind(of: HomeViewController.classForCoder()) {
+                                self.navigationController?.popToViewController(vw, animated: true)
+                            }
+                        }
                     }
                 } catch {
                     print(error)

@@ -44,6 +44,7 @@
 		E201434F23AB5E11004A9B94 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */; };
 		E201435123AB5E20004A9B94 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */; };
 		E2317CC223B0B3220024393A /* AddShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2317CC123B0B3220024393A /* AddShopViewController.swift */; };
+		E2C202B823B342FF004B2300 /* JYToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C202B723B342FF004B2300 /* JYToast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		E2317CC123B0B3220024393A /* AddShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShopViewController.swift; sourceTree = "<group>"; };
+		E2C202B723B342FF004B2300 /* JYToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JYToast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +223,7 @@
 		048F9EA9237C259800150D4A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				E2C202B723B342FF004B2300 /* JYToast.swift */,
 				048F9EAA237C259800150D4A /* Constant */,
 				048F9EAC237C259800150D4A /* Extentions */,
 			);
@@ -499,6 +502,7 @@
 				047EF0452379B933004B5CC6 /* AppDelegate.swift in Sources */,
 				048F9ECC237C259800150D4A /* UserDefaults+Extensions.swift in Sources */,
 				047EF0472379B933004B5CC6 /* SceneDelegate.swift in Sources */,
+				E2C202B823B342FF004B2300 /* JYToast.swift in Sources */,
 				048F9EC4237C259800150D4A /* Array+Extensions.swift in Sources */,
 				048F9EC9237C259800150D4A /* UIAlertController+Extensions.swift in Sources */,
 				E201434D23AB5DF5004A9B94 /* SignUpViewController.swift in Sources */,

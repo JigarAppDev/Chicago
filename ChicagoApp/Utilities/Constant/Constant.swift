@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 struct Size {
     static let SCREEN_WIDTH = UIScreen.main.bounds.size.width
@@ -19,6 +20,8 @@ let ETOKEN = "UserToken"
 
 let Loadersize = CGSize(width: 40, height: 40)
 var ToastDuration:TimeInterval = 2.0
+let Defaults = UserDefaults.standard
+var userData : JSON = []
 
 struct ValidationMessage {
     static let Username = "Please enter username"
@@ -29,4 +32,12 @@ struct ValidationMessage {
     static let Phone = "Please enter phone number"
     static let City = "Please enter city"
     static let Address = "Please enter address"
+}
+
+func getUserDetail() -> JSON {
+    guard let userDetail = UserDefaults.standard.value(forKey: "userDetail") as? Data else { return JSON.init() }
+    let data = JSON(userDetail)
+    userData = data
+    print(data)
+    return data
 }

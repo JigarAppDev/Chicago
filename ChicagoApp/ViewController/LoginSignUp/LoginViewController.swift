@@ -18,11 +18,16 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
 
     @IBOutlet var txtEmail: UITextField!
     @IBOutlet var txtPassword: UITextField!
+    private var toast: JYToast!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.initUi()
+    }
+    
+    private func initUi() {
+        toast = JYToast()
     }
     
     // MARK: - Back Click
@@ -42,16 +47,24 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
         self.navigationController?.pushViewController(forgotVC, animated: true)
     }
     
+    func isValidated() -> Bool {
+        var isFlag = true
+        if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            self.toast.isShow("Please Enter Email!")
+            isFlag = false
+        }else if self.txtPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            self.toast.isShow("Please Enter Password")
+            isFlag = false
+        }
+        return isFlag
+    }
+    
     //MARK: Login Click
     @IBAction func btnLoginClick(sender: UIButton) {
-        if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            KSToastView.ks_showToast("Please Enter Email!", duration: ToastDuration)
-            return
-        }else if self.txtPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            KSToastView.ks_showToast("Please Enter Password", duration: ToastDuration)
+        if !self.isValidated() {
             return
         }
-        startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
+        self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
         let deviceId = UIDevice.current.identifierForVendor!.uuidString
         let Url = String(format: APIConstants.LOGIN)
         guard let serviceUrl = URL(string: Url) else { return }
@@ -62,7 +75,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
         
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
-            self.dismiss(animated: true, completion: nil)
+            self.stopAnimating()
             if let response = response {
                 print(response)
             }
@@ -70,15 +83,20 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     let dataObj = json as! NSDictionary
-                    if dataObj.value(forKey: "status_code") as! Bool == true {
+                    if dataObj.value(forKey: "status_code") as! Int == 1 {
                         print(dataObj)
                     }
                     let dataObj1 = JSON.init(json)
-                    if dataObj1["status_code"].boolValue == true {
+                    //self.toast.isShow(dataObj1["msg"].stringValue)
+                    if dataObj1["status_code"].intValue == 1 {
                         print(dataObj1)
                     }
+                    let data : JSON = JSON.init(dataObj1["info"])
+                    guard let rowdata = try? data.rawData() else {return}
+                    Defaults.setValue(rowdata, forKey: "userDetail")
+                    Defaults.synchronize()
                     DispatchQueue.main.async {
-                        //self.tblMainCat.reloadData()
+                        self.navigationController?.popViewController(animated: true)
                     }
                 } catch {
                     print(error)

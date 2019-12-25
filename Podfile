@@ -8,7 +8,7 @@ target 'ChicagoApp' do
     pod 'Alamofire-SwiftyJSON'
     pod 'SDWebImage', '~> 4.0'
     pod 'IQKeyboardManagerSwift'
-    pod 'KSToastView', '0.5.7'
+    #pod 'KSToastView'
     pod 'FBSDKCoreKit'
     pod 'FBSDKLoginKit'
     pod 'GoogleSignIn', '~> 4.4.0'
