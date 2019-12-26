@@ -24,10 +24,11 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
         super.viewDidLoad()
 
         self.initUi()
+        self.txtEmail.becomeFirstResponder()
     }
     
     private func initUi() {
-        toast = JYToast()
+        toast = JYToast.init()
     }
     
     // MARK: - Back Click
@@ -64,6 +65,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
         if !self.isValidated() {
             return
         }
+        self.view.endEditing(true)
         self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
         let deviceId = UIDevice.current.identifierForVendor!.uuidString
         let Url = String(format: APIConstants.LOGIN)
@@ -75,7 +77,9 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
         
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
-            self.stopAnimating()
+            DispatchQueue.main.async {
+                self.stopAnimating()
+            }
             if let response = response {
                 print(response)
             }
@@ -87,9 +91,14 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
                         print(dataObj)
                     }
                     let dataObj1 = JSON.init(json)
-                    //self.toast.isShow(dataObj1["msg"].stringValue)
                     if dataObj1["status_code"].intValue == 1 {
                         print(dataObj1)
+                    } else {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Chicago Callsheet", message:dataObj1["msg"].stringValue, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
                     let data : JSON = JSON.init(dataObj1["info"])
                     guard let rowdata = try? data.rawData() else {return}

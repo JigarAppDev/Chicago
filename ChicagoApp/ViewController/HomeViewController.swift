@@ -18,12 +18,11 @@ class HomeViewController: UIViewController {
 
     @IBOutlet var tblMainCat: UITableView!
     @IBOutlet var btnLoginNow: UIButton!
+    @IBOutlet var btnAddShop: UIButton!
     var arrMainCategory = [JSON]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.getAllMainCategory()
         
     }
     
@@ -34,6 +33,7 @@ class HomeViewController: UIViewController {
             //LoggedIn
             self.btnLoginNow.isHidden = true
         }
+        self.getAllMainCategory()
     }
     
     //MARK: Main Category API Call
@@ -71,6 +71,17 @@ class HomeViewController: UIViewController {
                 }
             }
         }.resume()
+    }
+    
+    //MARK: ADD New shop
+    @IBAction func btnAddShopClick(sender: UIButton) {
+        if let _ = Defaults.value(forKey: "userDetail") {
+            let addVC = self.storyboard?.instantiateViewController(identifier: "AddShopViewController") as! AddShopViewController
+            self.navigationController?.pushViewController(addVC, animated: true)
+        } else {
+            let loginVC = self.storyboard?.instantiateViewController(identifier: "LoginViewController") as! LoginViewController
+            self.navigationController?.pushViewController(loginVC, animated: true)
+        }
     }
     
     //MARK: Login Click

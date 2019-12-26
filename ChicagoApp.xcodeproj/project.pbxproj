@@ -281,8 +281,8 @@
 			children = (
 				E201434A23AB5DE8004A9B94 /* LoginViewController.swift */,
 				E201434C23AB5DF5004A9B94 /* SignUpViewController.swift */,
-				E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */,
 				E201435023AB5E20004A9B94 /* ForgotPasswordViewController.swift */,
+				E201434E23AB5E11004A9B94 /* ResetPasswordViewController.swift */,
 			);
 			path = LoginSignUp;
 			sourceTree = "<group>";

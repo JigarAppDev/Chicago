@@ -26,10 +26,11 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
         super.viewDidLoad()
 
         self.initUi()
+        self.txtFullname.becomeFirstResponder()
     }
         
     private func initUi() {
-        toast = JYToast()
+        toast = JYToast.init()
     }
 
     // MARK: - Back Click
@@ -68,6 +69,7 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
         if !self.isValidated() {
             return
         }
+        self.view.endEditing(true)
         self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
         let deviceId = UIDevice.current.identifierForVendor!.uuidString
         let Url = String(format: APIConstants.SIGNUP)
@@ -79,7 +81,9 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
         
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
-            self.stopAnimating()
+            DispatchQueue.main.async {
+                self.stopAnimating()
+            }
             if let response = response {
                 print(response)
             }
@@ -93,6 +97,12 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
                     let dataObj1 = JSON.init(json)
                     if dataObj1["status_code"].boolValue == true {
                         print(dataObj1)
+                    } else {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Chicago Callsheet", message:dataObj1["msg"].stringValue, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
                     let data : JSON = JSON.init(dataObj1["data"])
                     guard let rowdata = try? data.rawData() else {return}
