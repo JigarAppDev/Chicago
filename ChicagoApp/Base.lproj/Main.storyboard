@@ -149,7 +149,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film_thumb" translatesAutoresizingMaskIntoConstraints="NO" id="vzU-4c-fa1">
-                                        <rect key="frame" x="137.5" y="10" width="45.000000000000114" height="45"/>
+                                        <rect key="frame" x="137.5" y="10" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="ADT-PZ-UfZ"/>
                                             <constraint firstAttribute="width" constant="45" id="Oxv-VK-oMG"/>
@@ -376,7 +376,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film_thumb" translatesAutoresizingMaskIntoConstraints="NO" id="s8h-Te-SM5">
-                                        <rect key="frame" x="137.5" y="10" width="45.000000000000114" height="45"/>
+                                        <rect key="frame" x="137.5" y="10" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="45" id="0R0-1q-gep"/>
                                             <constraint firstAttribute="height" constant="45" id="mIQ-5J-603"/>
@@ -497,7 +497,7 @@
                                 <viewLayoutGuide key="safeArea" id="TLp-e4-ZfB"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g5O-kM-yX5">
-                                <rect key="frame" x="0.0" y="84" width="320" height="374"/>
+                                <rect key="frame" x="0.0" y="129" width="320" height="329"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="120" id="Yoi-Zz-LgL" customClass="LocationCell" customModule="Chicago_Callsheet" customModuleProvider="target">
@@ -519,7 +519,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_icon" translatesAutoresizingMaskIntoConstraints="NO" id="wrK-ZU-jWe">
-                                                            <rect key="frame" x="25" y="37.5" width="25" height="45"/>
+                                                            <rect key="frame" x="25" y="15" width="25" height="90"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="6PW-bh-pJA"/>
                                                             </constraints>
@@ -593,6 +593,21 @@
                                     <outlet property="delegate" destination="Yt9-LS-n7f" id="y9X-fb-eHS"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hds-hp-MG7">
+                                <rect key="frame" x="0.0" y="137" width="320" height="321"/>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oT6-2D-RPk">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="321"/>
+                                    </mapView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="oT6-2D-RPk" secondAttribute="trailing" id="bgO-yT-Kmb"/>
+                                    <constraint firstItem="oT6-2D-RPk" firstAttribute="top" secondItem="hds-hp-MG7" secondAttribute="top" id="eL5-CL-9Tt"/>
+                                    <constraint firstAttribute="bottom" secondItem="oT6-2D-RPk" secondAttribute="bottom" id="iwV-oL-01b"/>
+                                    <constraint firstItem="oT6-2D-RPk" firstAttribute="leading" secondItem="hds-hp-MG7" secondAttribute="leading" id="qYh-eT-EeQ"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RtI-71-DL7">
                                 <rect key="frame" x="0.0" y="458" width="320" height="110"/>
                                 <subviews>
@@ -603,7 +618,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film_thumb" translatesAutoresizingMaskIntoConstraints="NO" id="V1K-qa-NsI">
-                                        <rect key="frame" x="137.5" y="10" width="45.000000000000114" height="45"/>
+                                        <rect key="frame" x="137.5" y="10" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="45" id="G20-68-ulj"/>
                                             <constraint firstAttribute="height" constant="45" id="b0b-y8-bpf"/>
@@ -652,17 +667,34 @@
                                     <constraint firstItem="V1K-qa-NsI" firstAttribute="top" secondItem="RtI-71-DL7" secondAttribute="top" constant="10" id="vNp-Bi-fl0"/>
                                 </constraints>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pZE-60-uvA">
+                                <rect key="frame" x="10" y="94" width="300" height="32"/>
+                                <segments>
+                                    <segment title="List"/>
+                                    <segment title="Map"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlValueChangedWithSegment:" destination="Yt9-LS-n7f" eventType="valueChanged" id="1zs-X1-8lR"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="hds-hp-MG7" firstAttribute="leading" secondItem="NtY-FN-72S" secondAttribute="leading" id="0DS-e7-NlT"/>
+                            <constraint firstItem="pZE-60-uvA" firstAttribute="top" secondItem="Nu2-nM-BGE" secondAttribute="bottom" constant="10" id="1wt-3s-W1I"/>
                             <constraint firstAttribute="trailing" secondItem="g5O-kM-yX5" secondAttribute="trailing" id="3KI-qm-vld"/>
                             <constraint firstAttribute="trailing" secondItem="RtI-71-DL7" secondAttribute="trailing" id="9E4-sJ-GCs"/>
+                            <constraint firstItem="RtI-71-DL7" firstAttribute="top" secondItem="hds-hp-MG7" secondAttribute="bottom" id="CQd-Wh-Awc"/>
                             <constraint firstItem="g5O-kM-yX5" firstAttribute="leading" secondItem="Qhw-bL-LUQ" secondAttribute="leading" id="HeW-aG-8fH"/>
                             <constraint firstItem="RtI-71-DL7" firstAttribute="top" secondItem="g5O-kM-yX5" secondAttribute="bottom" id="Ib9-KC-NPK"/>
-                            <constraint firstItem="g5O-kM-yX5" firstAttribute="top" secondItem="Nu2-nM-BGE" secondAttribute="bottom" id="TDm-9f-uQg"/>
+                            <constraint firstItem="g5O-kM-yX5" firstAttribute="top" secondItem="Nu2-nM-BGE" secondAttribute="bottom" constant="45" id="TDm-9f-uQg"/>
+                            <constraint firstItem="NtY-FN-72S" firstAttribute="trailing" secondItem="pZE-60-uvA" secondAttribute="trailing" constant="10" id="UHr-HI-aQ1"/>
                             <constraint firstAttribute="trailing" secondItem="Nu2-nM-BGE" secondAttribute="trailing" id="ULy-MR-cIl"/>
                             <constraint firstItem="RtI-71-DL7" firstAttribute="leading" secondItem="Qhw-bL-LUQ" secondAttribute="leading" id="eY8-1p-mUy"/>
+                            <constraint firstItem="hds-hp-MG7" firstAttribute="top" secondItem="pZE-60-uvA" secondAttribute="bottom" constant="12" id="enK-TW-yVb"/>
+                            <constraint firstItem="NtY-FN-72S" firstAttribute="trailing" secondItem="hds-hp-MG7" secondAttribute="trailing" id="ncD-y3-eD7"/>
                             <constraint firstItem="Nu2-nM-BGE" firstAttribute="leading" secondItem="Qhw-bL-LUQ" secondAttribute="leading" id="qbl-k4-mHo"/>
+                            <constraint firstItem="pZE-60-uvA" firstAttribute="leading" secondItem="NtY-FN-72S" secondAttribute="leading" constant="10" id="sdz-R4-tPL"/>
                             <constraint firstItem="RtI-71-DL7" firstAttribute="bottom" secondItem="NtY-FN-72S" secondAttribute="bottom" id="w54-sx-Tyz"/>
                             <constraint firstItem="Nu2-nM-BGE" firstAttribute="top" secondItem="Qhw-bL-LUQ" secondAttribute="top" id="xvg-0J-Xhg"/>
                         </constraints>
@@ -670,6 +702,9 @@
                     </view>
                     <connections>
                         <outlet property="lblTitle" destination="obN-RR-pbx" id="hRi-17-BHh"/>
+                        <outlet property="mapKitView" destination="oT6-2D-RPk" id="jbH-6E-mCo"/>
+                        <outlet property="mapView" destination="hds-hp-MG7" id="WKS-vM-f9p"/>
+                        <outlet property="segmentView" destination="pZE-60-uvA" id="SYt-Bw-Djp"/>
                         <outlet property="tblLocation" destination="g5O-kM-yX5" id="Qex-bP-hCo"/>
                     </connections>
                 </viewController>
@@ -1474,7 +1509,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="niI-ld-sS1">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="EdW-az-iO3"/>
                                                                     <constraint firstAttribute="width" constant="20" id="pjX-7T-6br"/>
@@ -1542,6 +1577,9 @@
                                                             <constraint firstAttribute="width" constant="50" id="z7y-gi-TLQ"/>
                                                         </constraints>
                                                         <state key="normal" image="facebook"/>
+                                                        <connections>
+                                                            <action selector="btnFBLoginClickWithSender:" destination="UWL-na-qaB" eventType="touchUpInside" id="UdN-67-t4f"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXe-lH-6bt">
                                                         <rect key="frame" x="186.5" y="626" width="50" height="50"/>
@@ -1550,6 +1588,9 @@
                                                             <constraint firstAttribute="height" constant="50" id="xqP-dY-ILO"/>
                                                         </constraints>
                                                         <state key="normal" image="google"/>
+                                                        <connections>
+                                                            <action selector="btnGoogleLoginClickWithSender:" destination="UWL-na-qaB" eventType="touchUpInside" id="nV8-qH-uir"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1769,7 +1810,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="sBu-hv-dfB">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="0MJ-Ie-8A5"/>
                                                                     <constraint firstAttribute="width" constant="20" id="Ryj-zA-EIO"/>
@@ -1827,6 +1868,9 @@
                                                             <constraint firstAttribute="width" constant="50" id="r28-1K-znx"/>
                                                         </constraints>
                                                         <state key="normal" image="facebook"/>
+                                                        <connections>
+                                                            <action selector="btnFBLoginClickWithSender:" destination="hcK-g9-kKb" eventType="touchUpInside" id="7Z0-vY-1if"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvx-J3-bJX">
                                                         <rect key="frame" x="192" y="726" width="50" height="50"/>
@@ -1835,6 +1879,9 @@
                                                             <constraint firstAttribute="width" constant="50" id="omA-7d-hMx"/>
                                                         </constraints>
                                                         <state key="normal" image="google"/>
+                                                        <connections>
+                                                            <action selector="btnGoogleLoginClickWithSender:" destination="hcK-g9-kKb" eventType="touchUpInside" id="3NO-bz-3lJ"/>
+                                                        </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJI-HF-Mba">
                                                         <rect key="frame" x="20" y="546" width="280" height="50"/>
@@ -1864,7 +1911,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="a4e-Ab-mcs">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="20" id="5ey-IW-3JF"/>
                                                                     <constraint firstAttribute="height" constant="10" id="QrW-xU-c04"/>
@@ -2028,7 +2075,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="city_bg" translatesAutoresizingMaskIntoConstraints="NO" id="bMK-DC-AXQ">
-                                <rect key="frame" x="0.0" y="576" width="320" height="92.000000000000057"/>
+                                <rect key="frame" x="0.0" y="576" width="320" height="92"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="92" id="y9q-yZ-qLA"/>
                                 </constraints>
@@ -2341,7 +2388,7 @@ New password.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="7bV-J9-Ysb">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="5CI-2K-1GB"/>
                                                                     <constraint firstAttribute="width" constant="20" id="ElS-ra-HTZ"/>
@@ -2411,7 +2458,7 @@ New password.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hide" translatesAutoresizingMaskIntoConstraints="NO" id="ay3-63-ZcG">
-                                                                <rect key="frame" x="252" y="31" width="20.000000000000114" height="10"/>
+                                                                <rect key="frame" x="252" y="31" width="20" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="4bR-Yw-U7b"/>
                                                                     <constraint firstAttribute="width" constant="20" id="SpV-my-Pdq"/>

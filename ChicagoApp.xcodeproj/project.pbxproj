@@ -694,7 +694,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jobsdepot.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chicagocallsheet.chicagocallsheet;
 				PRODUCT_NAME = "Chicago Callsheet";
 				PROVISIONING_PROFILE_SPECIFIER = New_Test_Dev_Profile;
 				SWIFT_VERSION = 5.0;
@@ -716,7 +716,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jobsdepot.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chicagocallsheet.chicagocallsheet;
 				PRODUCT_NAME = "Chicago Callsheet";
 				PROVISIONING_PROFILE_SPECIFIER = New_Test_Dev_Profile;
 				SWIFT_VERSION = 5.0;

@@ -93,9 +93,6 @@ class ResetPasswordViewController: UIViewController, NVActivityIndicatorViewable
     
     //MARK: Resend OTP
     @IBAction func btnResendOTP(sender: UIButton) {
-        if !self.isValidated() {
-            return
-        }
         self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
         let Url = String(format: APIConstants.FORGOTPWD)
         guard let serviceUrl = URL(string: Url) else { return }

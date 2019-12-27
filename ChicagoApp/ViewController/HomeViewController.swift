@@ -28,10 +28,10 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.btnLoginNow.isHidden = false
+        self.btnLoginNow.setTitle("Login", for: .normal)
         if let _ = Defaults.value(forKey: "userDetail") {
             //LoggedIn
-            self.btnLoginNow.isHidden = true
+            self.btnLoginNow.setTitle("Logout", for: .normal)
         }
         self.getAllMainCategory()
     }
@@ -86,8 +86,21 @@ class HomeViewController: UIViewController {
     
     //MARK: Login Click
     @IBAction func btnLoginClick(sender: UIButton) {
-        let loginVC = self.storyboard?.instantiateViewController(identifier: "LoginViewController") as! LoginViewController
-        self.navigationController?.pushViewController(loginVC, animated: true)
+        if let _ = Defaults.value(forKey: "userDetail") {
+            //Logout
+            let alert = UIAlertController(title: "Chicago Callsheet", message:"Are you sure to logout?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            alert.addAction(UIAlertAction.init(title: "Yes", style: .default, handler: { (action) in
+                UserDefaults.standard.removeObject(forKey: "userDetail")
+                UserDefaults.standard.synchronize()
+                self.btnLoginNow.setTitle("Login", for: .normal)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            //Login
+            let loginVC = self.storyboard?.instantiateViewController(identifier: "LoginViewController") as! LoginViewController
+            self.navigationController?.pushViewController(loginVC, animated: true)
+        }
     }
     
     //MARK: TV Click

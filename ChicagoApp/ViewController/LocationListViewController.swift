@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import MapKit
 
 class LocationCell: UITableViewCell {
     @IBOutlet var lblName: UILabel!
@@ -17,14 +18,22 @@ class LocationListViewController: UIViewController {
 
     @IBOutlet var tblLocation: UITableView!
     @IBOutlet var lblTitle: UILabel!
+    @IBOutlet var mapView: UIView!
+    @IBOutlet var segmentView: UISegmentedControl!
+    @IBOutlet var mapKitView: MKMapView!
+
     var selectedObj: JSON!
     var categoryArray = [JSON]()
+    var mapAnnoArray = [MKPointAnnotation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.lblTitle.text = self.selectedObj["category_name"].stringValue
         self.getAllCategory()
+        self.mapView.isHidden = true
+        self.tblLocation.isHidden = false
+        self.mapKitView.delegate = self
     }
     
     // MARK: - Back Click
@@ -62,6 +71,8 @@ class LocationListViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.tblLocation.reloadData()
                     }
+                    self.mapAnnoArray.removeAll()
+                    self.showMarkerOnMap()
                 } catch {
                     print(error)
                 }
@@ -81,6 +92,47 @@ class LocationListViewController: UIViewController {
     @IBAction func btnLikeClick(sender: UIButton) {
         let likeVC = self.storyboard?.instantiateViewController(identifier: "LikedCategoryViewController") as! LikedCategoryViewController
         self.navigationController?.pushViewController(likeVC, animated: true)
+    }
+    
+    //MARK: Segment Click Event
+    @IBAction func segmentedControlValueChanged(segment:UISegmentedControl) {
+        if segment.selectedSegmentIndex == 0 {
+            //List
+            self.mapView.isHidden = true
+            self.tblLocation.isHidden = false
+            self.tblLocation.reloadData()
+        } else {
+            //Map
+            self.mapView.isHidden = false
+            self.tblLocation.isHidden = true
+            self.mapKitView.fitAllAnnotations()
+        }
+    }
+    
+    //MARK: Get Lat long to show marker on map
+    func showMarkerOnMap() {
+        for obj in self.categoryArray {
+            let address = obj["Address"].stringValue
+            if address == "" {
+                return
+            }
+            let geoCoder = CLGeocoder()
+            geoCoder.geocodeAddressString(address) { (placemarks, error) in
+                guard
+                    let placemarks = placemarks,
+                    let location = placemarks.first?.location
+                else {
+                    // handle no location found
+                    return
+                }
+                let coordinate = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+                let annotation = MKPointAnnotation()
+                annotation.title = obj["Company_name"].stringValue
+                annotation.coordinate = coordinate
+                self.mapKitView.addAnnotation(annotation)
+            }
+        }
+        self.mapKitView.fitAllAnnotations()
     }
 }
 
@@ -105,3 +157,44 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
     }
 }
 
+extension LocationListViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        var annotationView = MKMarkerAnnotationView()
+        guard let annotation = annotation as? MKPointAnnotation else {return nil}
+        let identifier = ""
+        annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        annotationView.markerTintColor = .blue
+        annotationView.glyphImage = UIImage(named: "map_pin_icon")
+        annotationView.clusteringIdentifier = identifier
+        return annotationView
+    }
+}
+
+extension MKMapView {
+    func fitAllAnnotations() {
+        
+        guard annotations.count > 0 else {
+            return
+        }
+        var topLeftCoord: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        topLeftCoord.latitude = -90
+        topLeftCoord.longitude = 180
+        var bottomRightCoord: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        bottomRightCoord.latitude = 90
+        bottomRightCoord.longitude = -180
+        for annotation: MKAnnotation in annotations {
+            topLeftCoord.longitude = fmin(topLeftCoord.longitude, annotation.coordinate.longitude)
+            topLeftCoord.latitude = fmax(topLeftCoord.latitude, annotation.coordinate.latitude)
+            bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, annotation.coordinate.longitude)
+            bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, annotation.coordinate.latitude)
+        }
+
+        var region: MKCoordinateRegion = MKCoordinateRegion()
+        region.center.latitude = topLeftCoord.latitude - (topLeftCoord.latitude - bottomRightCoord.latitude) * 0.5
+        region.center.longitude = topLeftCoord.longitude + (bottomRightCoord.longitude - topLeftCoord.longitude) * 0.5
+        region.span.latitudeDelta = fabs(topLeftCoord.latitude - bottomRightCoord.latitude) * 1.4
+        region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.4
+        region = regionThatFits(region)
+        setRegion(region, animated: true)
+    }
+}

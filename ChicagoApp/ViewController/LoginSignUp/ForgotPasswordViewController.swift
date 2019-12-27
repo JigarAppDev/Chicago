@@ -68,16 +68,16 @@ class ForgotPasswordViewController: UIViewController, NVActivityIndicatorViewabl
                     let dataObj1 = JSON.init(json)
                     DispatchQueue.main.async {
                         let alert = UIAlertController(title: "Chicago Callsheet", message:dataObj1["msg"].stringValue, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: { (action) in
+                            if dataObj1["status_code"].boolValue == true {
+                                let resetVC = self.storyboard?.instantiateViewController(identifier: "ResetPasswordViewController") as! ResetPasswordViewController
+                                resetVC.email = self.txtEmail.text!
+                                self.navigationController?.pushViewController(resetVC, animated: true)
+                            }
+                        }))
                         self.present(alert, animated: true, completion: nil)
                     }
-                    if dataObj1["status_code"].intValue == 1 {
-                        DispatchQueue.main.async {
-                            let resetVC = self.storyboard?.instantiateViewController(identifier: "ResetPasswordViewController") as! ResetPasswordViewController
-                            resetVC.email = self.txtEmail.text!
-                            self.navigationController?.pushViewController(resetVC, animated: true)
-                        }
-                    }
+                    
                 } catch {
                     print(error)
                 }

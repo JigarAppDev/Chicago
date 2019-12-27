@@ -14,7 +14,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import NVActivityIndicatorView
 
-class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GIDSignInDelegate, GIDSignInUIDelegate,
+class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSignInDelegate, GIDSignInUIDelegate {
 
     @IBOutlet var txtEmail: UITextField!
     @IBOutlet var txtPassword: UITextField!
@@ -116,20 +116,16 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
     
     //MARK: Facebook Login Click
     @IBAction func btnFBLoginClick(sender: UIButton) {
-        /*
          let fbLoginManager : LoginManager = LoginManager()
          fbLoginManager.logIn(permissions: ["email"], from: self, handler: { (result, error) -> Void in
-             print(result?.isCancelled)
-             print(result)
-             print(error)
              if (error == nil){
                  let fbloginresult : LoginManagerLoginResult = result!
-                 self.tabBarController?.tabBar.isHidden = true
+                 if fbloginresult.isCancelled {
+                    return
+                 }
                  if fbloginresult.grantedPermissions != nil{
                      self.tabBarController?.tabBar.isHidden = true
                      if(fbloginresult.grantedPermissions.contains("email")){
-                         
-                         //let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
                          
                          self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
                          
@@ -141,26 +137,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
                              {
                                  print(result!)
                                  let jsonUser : JSON = JSON.init(result!)
-                                 let param  : NSMutableDictionary =  NSMutableDictionary()
-                                 param.setValue("", forKey: "google_id")
-                                 param.setValue(jsonUser["id"].stringValue, forKey: "facebook_id")
-                                 let randomInt = Int.random(in: 0..<1000)
-                                 if jsonUser["first_name"].stringValue != "" {
-                                     param.setValue("\(jsonUser["first_name"].stringValue)\(randomInt)", forKey: "username")
-                                 } else {
-                                     param.setValue(jsonUser["name"].stringValue, forKey: "username")
-                                 }
-                                 param.setValue(jsonUser["first_name"].stringValue, forKey: "first_name")
-                                 param.setValue(jsonUser["last_name"].stringValue, forKey: "last_name")
-                                 param.setValue(jsonUser["email"].stringValue, forKey: "email")
-                                 if isHire {
-                                     param.setValue("2", forKey: "profile_type_id")
-                                 } else {
-                                     param.setValue("1", forKey: "profile_type_id")
-                                 }
-                                 param.setValue(deviceTokenClientGL, forKey: "device_token")
-                                 param.setValue("0", forKey: "device_type") //0 -> iOS 1-> Android
-                                 self.sendSocial(param: param)
+                                 self.loginBySocial(name: jsonUser["first_name"].stringValue, id: jsonUser["id"].stringValue, email: jsonUser["email"].stringValue, type: "1")
                                  fbLoginManager.logOut()
                                  
                              } else {
@@ -170,38 +147,6 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
                                  fbLoginManager.logOut()
                              }
                          })
-                         
-                         /*Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
-                             if error != nil {
-                                 print(error!)
-                                 self.stopAnimating()
-                                 KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
-                                 fbLoginManager.logOut()
-                             }else{
-                                 let jsonUser : JSON = JSON.init(authResult!.additionalUserInfo!.profile!)
-                                 //KSToastView.ks_showToast(jsonUser, duration: ToastDuration)
-                                 let param  : NSMutableDictionary =  NSMutableDictionary()
-                                 param.setValue("", forKey: "google_id")
-                                 param.setValue(Auth.auth().currentUser!.uid, forKey: "facebook_id")
-                                 let randomInt = Int.random(in: 0..<1000)
-                                 if jsonUser["name"].stringValue != "" {
-                                     param.setValue("\(jsonUser["name"].stringValue)\(randomInt)", forKey: "username")
-                                 }
-                                 param.setValue(jsonUser["name"].stringValue, forKey: "username")
-                                 param.setValue(jsonUser["first_name"].stringValue, forKey: "first_name")
-                                 param.setValue(jsonUser["last_name"].stringValue, forKey: "last_name")
-                                 param.setValue(jsonUser["email"].stringValue, forKey: "email")
-                                 if isHire {
-                                     param.setValue("2", forKey: "profile_type_id")
-                                 } else {
-                                     param.setValue("1", forKey: "profile_type_id")
-                                 }
-                                 param.setValue(deviceTokenGL, forKey: "device_token")
-                                 param.setValue("0", forKey: "device_type") //0 -> iOS 1-> Android
-                                 self.sendSocial(param: param)
-                                 fbLoginManager.logOut()
-                             }
-                         }*/
                      }else{
                          KSToastView.ks_showToast("Issue on facebook", duration: ToastDuration)
                      }
@@ -213,19 +158,15 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
                  print(error?.localizedDescription ?? "")
              }
          })
-         */
     }
     
     //MARK: Google Login Click
     @IBAction func btnGoogleLoginClick(sender: UIButton) {
-        /*
          GIDSignIn.sharedInstance().delegate = self
          GIDSignIn.sharedInstance().uiDelegate = self
          GIDSignIn.sharedInstance().signIn()
-         */
     }
     
-    /*
      //MARK: - Google Sign In Delegate Method
      
      func sign(_ signIn: GIDSignIn!,present viewController: UIViewController!) {
@@ -239,66 +180,71 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable { // GI
      public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
          if (error == nil) {
              
-             /*guard let authentication = user.authentication else { return }
-             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                            accessToken: authentication.accessToken)*/
-             
              startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
              
              let fullName : [String] = user.profile!.name.components(separatedBy: " ")
-             let param  : NSMutableDictionary =  NSMutableDictionary()
-             param.setValue(user.userID, forKey: "google_id")
-             param.setValue("", forKey: "facebook_id")
-             let randomInt = Int.random(in: 0..<1000)
-             if user.profile!.name != nil {
-                 param.setValue("\(fullName[0])\(randomInt)", forKey: "username")
-             }
-             param.setValue(fullName[0], forKey: "first_name")
-             param.setValue(fullName[1], forKey: "last_name")
-             param.setValue(user.profile.email!, forKey: "email")
-             if isHire {
-                 param.setValue("2", forKey: "profile_type_id")
-             } else {
-                 param.setValue("1", forKey: "profile_type_id")
-             }
-             param.setValue(deviceTokenClientGL, forKey: "device_token")
-             param.setValue("0", forKey: "device_type") //0 -> iOS 1-> Android
-             self.sendSocial(param: param)
+             self.loginBySocial(name: fullName[0], id: user.userID, email: user.profile.email!, type: "2")
              GIDSignIn.sharedInstance().signOut()
-             
-             /*Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
-                 if let error = error {
-                     self.stopAnimating()
-                     KSToastView.ks_showToast("\(error)", duration: ToastDuration)
-                     return
-                 }else{
-                     KSToastView.ks_showToast("\(user.profile.email!)", duration: ToastDuration)
-                     let fullName : [String] = user.profile!.name.components(separatedBy: " ")
-                     let param  : NSMutableDictionary =  NSMutableDictionary()
-                     param.setValue(Auth.auth().currentUser!.uid, forKey: "google_id")
-                     param.setValue("", forKey: "facebook_id")
-                     let randomInt = Int.random(in: 0..<1000)
-                     if user.profile!.name != nil {
-                         param.setValue("\(fullName[0])\(randomInt)", forKey: "username")
-                     }
-                     param.setValue(fullName[0], forKey: "first_name")
-                     param.setValue(fullName[1], forKey: "last_name")
-                     param.setValue(user.profile.email!, forKey: "email")
-                     if isHire {
-                         param.setValue("2", forKey: "profile_type_id")
-                     } else {
-                         param.setValue("1", forKey: "profile_type_id")
-                     }
-                     param.setValue(deviceTokenGL, forKey: "device_token")
-                     param.setValue("0", forKey: "device_type") //0 -> iOS 1-> Android
-                     self.sendSocial(param: param)
-                     GIDSignIn.sharedInstance().signOut()
-                 }
-             }*/
          } else {
              self.stopAnimating()
              print("\(error.debugDescription)")
          }
      }
-     */
+     
+    //MARK: Login by Social
+    func loginBySocial(name:String,id:String,email:String,type:String) {
+        //type 1 = fb & 2 = google
+        var emailId = email
+        if email == "" {
+            emailId = name
+        }
+        self.view.endEditing(true)
+        self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
+        let deviceId = UIDevice.current.identifierForVendor!.uuidString
+        let Url = String(format: APIConstants.LoginByThirdParty)
+        guard let serviceUrl = URL(string: Url) else { return }
+        var request = URLRequest(url: serviceUrl)
+        request.httpMethod = "POST"
+        let paramString = "name=\(name)&thirdparty_id=\(id)&email=\(emailId)&login_type=\(type)&device_token=123456789&device_type=2&device_id=\(deviceId)"
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
+        
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                self.stopAnimating()
+            }
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    let dataObj = json as! NSDictionary
+                    if dataObj.value(forKey: "status_code") as! Int == 1 {
+                        print(dataObj)
+                    }
+                    let dataObj1 = JSON.init(json)
+                    if dataObj1["status_code"].intValue == 1 {
+                        print(dataObj1)
+                    } else {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Chicago Callsheet", message:dataObj1["msg"].stringValue, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                    let data : JSON = JSON.init(dataObj1["info"])
+                    guard let rowdata = try? data.rawData() else {return}
+                    Defaults.setValue(rowdata, forKey: "userDetail")
+                    Defaults.synchronize()
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
+    }
 }
+

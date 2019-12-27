@@ -14,7 +14,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import NVActivityIndicatorView
 
-class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
+class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSignInDelegate, GIDSignInUIDelegate {
     
     @IBOutlet var txtFullname: UITextField!
     @IBOutlet var txtEmail: UITextField!
@@ -124,11 +124,134 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable {
     
     //MARK: Facebook Login Click
     @IBAction func btnFBLoginClick(sender: UIButton) {
-        
+         let fbLoginManager : LoginManager = LoginManager()
+         fbLoginManager.logIn(permissions: ["email"], from: self, handler: { (result, error) -> Void in
+             if (error == nil){
+                 let fbloginresult : LoginManagerLoginResult = result!
+                 if fbloginresult.isCancelled {
+                    return
+                 }
+                 if fbloginresult.grantedPermissions != nil{
+                     self.tabBarController?.tabBar.isHidden = true
+                     if(fbloginresult.grantedPermissions.contains("email")){
+                         
+                         self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
+                         
+                         //Graph data
+                         let req = GraphRequest(graphPath: "me", parameters: ["fields":"email,name,first_name,last_name"], tokenString: AccessToken.current?.tokenString, version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
+                         
+                         req.start(completionHandler: { (test, result, error) in
+                             if(error == nil)
+                             {
+                                 print(result!)
+                                 let jsonUser : JSON = JSON.init(result!)
+                                 self.loginBySocial(name: jsonUser["first_name"].stringValue, id: jsonUser["id"].stringValue, email: jsonUser["email"].stringValue, type: "1")
+                                 fbLoginManager.logOut()
+                                 
+                             } else {
+                                 print(error!)
+                                 self.stopAnimating()
+                                 KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                                 fbLoginManager.logOut()
+                             }
+                         })
+                     }else{
+                         KSToastView.ks_showToast("Issue on facebook", duration: ToastDuration)
+                     }
+                 }else{
+                     KSToastView.ks_showToast("Granted permission is nil", duration: ToastDuration)
+                 }
+             }else{
+                 KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                 print(error?.localizedDescription ?? "")
+             }
+         })
     }
     
     //MARK: Google Login Click
     @IBAction func btnGoogleLoginClick(sender: UIButton) {
+         GIDSignIn.sharedInstance().delegate = self
+         GIDSignIn.sharedInstance().uiDelegate = self
+         GIDSignIn.sharedInstance().signIn()
+    }
+    
+     //MARK: - Google Sign In Delegate Method
+     
+     func sign(_ signIn: GIDSignIn!,present viewController: UIViewController!) {
+         self.present(viewController, animated: true, completion: nil)
+     }
+     
+     func sign(_ signIn: GIDSignIn!,dismiss viewController: UIViewController!) {
+         self.dismiss(animated: true, completion: nil)
+     }
+     
+     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+         if (error == nil) {
+             
+             startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
+             
+             let fullName : [String] = user.profile!.name.components(separatedBy: " ")
+             self.loginBySocial(name: fullName[0], id: user.userID, email: user.profile.email!, type: "2")
+             GIDSignIn.sharedInstance().signOut()
+         } else {
+             self.stopAnimating()
+             print("\(error.debugDescription)")
+         }
+     }
+     
+    //MARK: Login by Social
+    func loginBySocial(name:String,id:String,email:String,type:String) {
+        //type 1 = fb & 2 = google
+        var emailId = email
+        if email == "" {
+            emailId = name
+        }
+        self.view.endEditing(true)
+        self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
+        let deviceId = UIDevice.current.identifierForVendor!.uuidString
+        let Url = String(format: APIConstants.LoginByThirdParty)
+        guard let serviceUrl = URL(string: Url) else { return }
+        var request = URLRequest(url: serviceUrl)
+        request.httpMethod = "POST"
+        let paramString = "name=\(name)&thirdparty_id=\(id)&email=\(emailId)&login_type=\(type)&device_token=123456789&device_type=2&device_id=\(deviceId)"
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                self.stopAnimating()
+            }
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    let dataObj = json as! NSDictionary
+                    if dataObj.value(forKey: "status_code") as! Int == 1 {
+                        print(dataObj)
+                    }
+                    let dataObj1 = JSON.init(json)
+                    if dataObj1["status_code"].intValue == 1 {
+                        print(dataObj1)
+                    } else {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Chicago Callsheet", message:dataObj1["msg"].stringValue, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                    let data : JSON = JSON.init(dataObj1["info"])
+                    guard let rowdata = try? data.rawData() else {return}
+                    Defaults.setValue(rowdata, forKey: "userDetail")
+                    Defaults.synchronize()
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
     }
 }
