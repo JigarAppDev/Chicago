@@ -246,7 +246,11 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
                     Defaults.setValue(rowdata, forKey: "userDetail")
                     Defaults.synchronize()
                     DispatchQueue.main.async {
-                        self.navigationController?.popViewController(animated: true)
+                        for vw in self.navigationController!.viewControllers {
+                            if vw.isKind(of: HomeViewController.classForCoder()) {
+                                self.navigationController?.popToViewController(vw, animated: true)
+                            }
+                        }
                     }
                 } catch {
                     print(error)
