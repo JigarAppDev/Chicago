@@ -51,10 +51,16 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
     func isValidated() -> Bool {
         var isFlag = true
         if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Email!")
+            //self.toast.isShow("Please Enter Email!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Email!")
+            }
             isFlag = false
         }else if self.txtPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Password")
+            //self.toast.isShow("Please Enter Password")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Password")
+            }
             isFlag = false
         }
         return isFlag
@@ -143,18 +149,30 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
                              } else {
                                  print(error!)
                                  self.stopAnimating()
-                                 KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                                 //KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                                DispatchQueue.main.async {
+                                    self.showAlert(msg: error?.localizedDescription ?? "Issue on facebook")
+                                }
                                  fbLoginManager.logOut()
                              }
                          })
                      }else{
-                         KSToastView.ks_showToast("Issue on facebook", duration: ToastDuration)
+                         //KSToastView.ks_showToast("Issue on facebook", duration: ToastDuration)
+                        DispatchQueue.main.async {
+                            self.showAlert(msg: "Issue on facebook")
+                        }
                      }
                  }else{
-                     KSToastView.ks_showToast("Granted permission is nil", duration: ToastDuration)
+                     //KSToastView.ks_showToast("Granted permission is nil", duration: ToastDuration)
+                    DispatchQueue.main.async {
+                        self.showAlert(msg: "Granted permission is nil")
+                    }
                  }
              }else{
-                 KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                 //KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                DispatchQueue.main.async {
+                    self.showAlert(msg: error?.localizedDescription ?? "Issue on facebook")
+                }
                  print(error?.localizedDescription ?? "")
              }
          })
@@ -228,9 +246,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
                         print(dataObj1)
                     } else {
                         DispatchQueue.main.async {
-                            let alert = UIAlertController(title: "Chicago Callsheet", message:dataObj1["msg"].stringValue, preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alert, animated: true, completion: nil)
+                            self.showAlert(msg: dataObj1["msg"].stringValue)
                         }
                     }
                     let data : JSON = JSON.init(dataObj1["info"])
@@ -245,6 +261,13 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
                 }
             }
         }.resume()
+    }
+    
+    //MARK: Show Alert
+    func showAlert(msg: String) {
+        let alert = UIAlertController(title: "Chicago Callsheet", message:msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

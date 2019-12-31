@@ -45,22 +45,40 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
     func isValidated() -> Bool {
         var isFlag = true
         if self.ArrUploadFile.count == 0 {
-            self.toast.isShow("Please Add Shop Logo!")
+            //self.toast.isShow("Please Add Shop Logo!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Add Shop Logo/Image!")
+            }
             isFlag = false
         } else if self.txtShopname.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Shopname!")
+            //self.toast.isShow("Please Enter Shopname!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Shopname!")
+            }
             isFlag = false
         } else if self.txvAbout.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter About Info!")
+            //self.toast.isShow("Please Enter About Info!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter About Info!")
+            }
             isFlag = false
         } else if self.txtLocation.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Location!")
+            //self.toast.isShow("Please Enter Location!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Location!")
+            }
             isFlag = false
         } else if self.txtMobile.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Mobile Number!")
+            //self.toast.isShow("Please Enter Mobile Number!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Mobile Number!")
+            }
             isFlag = false
         } else if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Email!")
+            //self.toast.isShow("Please Enter Email!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Email!")
+            }
             isFlag = false
         }
         return isFlag
@@ -223,6 +241,13 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
                     //KSToastView.ks_showToast("Please Enter Valid ZipCode!", duration: ToastDuration)
                 }
             } as CLGeocodeCompletionHandler)
+    }
+    
+    //MARK: Show Alert
+    func showAlert(msg: String) {
+        let alert = UIAlertController(title: "Chicago Callsheet", message:msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
