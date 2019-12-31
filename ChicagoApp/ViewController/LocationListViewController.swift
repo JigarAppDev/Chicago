@@ -168,6 +168,19 @@ extension LocationListViewController: MKMapViewDelegate {
         annotationView.clusteringIdentifier = identifier
         return annotationView
     }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if self.categoryArray.count > 0 {
+            for obj in self.categoryArray {
+                if obj["Company_name"].stringValue == view.annotation?.title {
+                    let detailsVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as! DetailsViewController
+                    detailsVC.selectedObj = obj
+                    self.navigationController?.pushViewController(detailsVC, animated: true)
+                    break
+                }
+            }
+        }
+    }
 }
 
 extension MKMapView {

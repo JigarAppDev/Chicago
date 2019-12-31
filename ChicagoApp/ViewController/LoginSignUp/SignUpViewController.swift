@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import KSToastView
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
@@ -45,19 +46,34 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
     func isValidated() -> Bool {
         var isFlag = true
         if self.txtFullname.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Your Fullname!")
+            //self.toast.isShow("Please Enter Your Fullname!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Your Fullname!")
+            }
             isFlag = false
         }else if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Your Email!")
+            //self.toast.isShow("Please Enter Your Email!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Your Email!")
+            }
             isFlag = false
         }else if self.txtPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Your Password!")
+            //self.toast.isShow("Please Enter Your Password!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Your Password!")
+            }
             isFlag = false
         }else if self.txtConfirmPassword.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
-            self.toast.isShow("Please Enter Your Confirm Password!")
+            //self.toast.isShow("Please Enter Your Confirm Password!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Your Confirm Password!")
+            }
             isFlag = false
         }else if self.txtPassword.text! != self.txtConfirmPassword.text! {
-            self.toast.isShow("Your password is mismatch!")
+            //self.toast.isShow("Your password is mismatch!")
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Your password is mismatch!")
+            }
             isFlag = false
         }
         return isFlag
@@ -151,21 +167,29 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
                                  print(error!)
                                  self.stopAnimating()
                                  //KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
-                                self.toast.isShow(error?.localizedDescription ?? "Issue on facebook")
+                                DispatchQueue.main.async {
+                                    self.showAlert(msg: error?.localizedDescription ?? "Issue on facebook")
+                                }
                                  fbLoginManager.logOut()
                              }
                          })
                      }else{
                          //KSToastView.ks_showToast("Issue on facebook", duration: ToastDuration)
-                        self.toast.isShow("Issue on facebook")
+                        DispatchQueue.main.async {
+                            self.showAlert(msg: "Issue on facebook")
+                        }
                      }
                  }else{
                      //KSToastView.ks_showToast("Granted permission is nil", duration: ToastDuration)
-                    self.toast.isShow("Granted permission is nil")
+                    DispatchQueue.main.async {
+                        self.showAlert(msg: "Granted permission is nil")
+                    }
                  }
              }else{
                  //KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
-                 print(error?.localizedDescription ?? "")
+                DispatchQueue.main.async {
+                    self.showAlert(msg: error?.localizedDescription ?? "Issue on facebook")
+                }
              }
          })
     }
@@ -259,5 +283,12 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
                 }
             }
         }.resume()
+    }
+    
+    //MARK: Show Alert
+    func showAlert(msg: String) {
+        let alert = UIAlertController(title: "Chicago Callsheet", message:msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
