@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import KSToastView
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
@@ -143,18 +142,22 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
                              } else {
                                  print(error!)
                                  self.stopAnimating()
-                                 KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                                 //KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                                self.toast.isShow(error?.localizedDescription ?? "Issue on facebook")
                                  fbLoginManager.logOut()
                              }
                          })
                      }else{
-                         KSToastView.ks_showToast("Issue on facebook", duration: ToastDuration)
+                         //KSToastView.ks_showToast("Issue on facebook", duration: ToastDuration)
+                        self.toast.isShow("Issue on facebook")
                      }
                  }else{
-                     KSToastView.ks_showToast("Granted permission is nil", duration: ToastDuration)
+                     //KSToastView.ks_showToast("Granted permission is nil", duration: ToastDuration)
+                    self.toast.isShow("Granted permission is nil")
                  }
              }else{
-                 KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                 //KSToastView.ks_showToast(error?.localizedDescription ?? "Issue on facebook", duration: ToastDuration)
+                 self.toast.isShow("Issue on facebook")
                  print(error?.localizedDescription ?? "")
              }
          })

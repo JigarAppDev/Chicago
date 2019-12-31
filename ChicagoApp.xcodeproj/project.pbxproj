@@ -687,7 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = NP4S9JY938;
+				DEVELOPMENT_TEAM = 7DLPQZS6M4;
 				INFOPLIST_FILE = ChicagoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -696,7 +696,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chicagocallsheet.chicagocallsheet;
 				PRODUCT_NAME = "Chicago Callsheet";
-				PROVISIONING_PROFILE_SPECIFIER = New_Test_Dev_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = Chicago_Dev_Profile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -709,7 +709,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = NP4S9JY938;
+				DEVELOPMENT_TEAM = 7DLPQZS6M4;
 				INFOPLIST_FILE = ChicagoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -718,7 +718,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chicagocallsheet.chicagocallsheet;
 				PRODUCT_NAME = "Chicago Callsheet";
-				PROVISIONING_PROFILE_SPECIFIER = New_Test_Dev_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = Chicago_Dev_Profile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
