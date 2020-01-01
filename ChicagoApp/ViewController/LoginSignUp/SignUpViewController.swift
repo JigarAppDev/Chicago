@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import KSToastView
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
@@ -26,7 +25,7 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
         super.viewDidLoad()
 
         self.initUi()
-        self.txtFullname.becomeFirstResponder()
+        //self.txtFullname.becomeFirstResponder()
     }
         
     private func initUi() {
@@ -139,6 +138,7 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
     
     //MARK: Facebook Login Click
     @IBAction func btnFBLoginClick(sender: UIButton) {
+        view.endEditing(true)
          let fbLoginManager : LoginManager = LoginManager()
          fbLoginManager.logIn(permissions: ["email"], from: self, handler: { (result, error) -> Void in
              if (error == nil){
@@ -196,6 +196,7 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
     
     //MARK: Google Login Click
     @IBAction func btnGoogleLoginClick(sender: UIButton) {
+        view.endEditing(true)
          GIDSignIn.sharedInstance().delegate = self
          GIDSignIn.sharedInstance().uiDelegate = self
          GIDSignIn.sharedInstance().signIn()

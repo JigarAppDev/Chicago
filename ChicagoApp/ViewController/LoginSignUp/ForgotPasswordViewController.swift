@@ -19,7 +19,7 @@ class ForgotPasswordViewController: UIViewController, NVActivityIndicatorViewabl
         super.viewDidLoad()
 
         self.toast = JYToast.init()
-        self.txtEmail.becomeFirstResponder()
+        //self.txtEmail.becomeFirstResponder()
     }
     
     // MARK: - Back Click

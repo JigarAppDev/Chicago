@@ -22,7 +22,7 @@ class ResetPasswordViewController: UIViewController, NVActivityIndicatorViewable
         super.viewDidLoad()
 
         self.toast = JYToast.init()
-        self.txtOTP.becomeFirstResponder()
+        //self.txtOTP.becomeFirstResponder()
     }
 
     // MARK: - Back Click

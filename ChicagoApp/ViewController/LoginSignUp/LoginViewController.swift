@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import KSToastView
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
@@ -24,7 +23,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
         super.viewDidLoad()
 
         self.initUi()
-        self.txtEmail.becomeFirstResponder()
+        //self.txtEmail.becomeFirstResponder()
     }
     
     private func initUi() {
@@ -122,6 +121,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
     
     //MARK: Facebook Login Click
     @IBAction func btnFBLoginClick(sender: UIButton) {
+        view.endEditing(true)
          let fbLoginManager : LoginManager = LoginManager()
          fbLoginManager.logIn(permissions: ["email"], from: self, handler: { (result, error) -> Void in
              if (error == nil){
@@ -130,7 +130,6 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
                     return
                  }
                  if fbloginresult.grantedPermissions != nil{
-                     self.tabBarController?.tabBar.isHidden = true
                      if(fbloginresult.grantedPermissions.contains("email")){
                          
                          self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
@@ -176,10 +175,43 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable, GIDSig
                  print(error?.localizedDescription ?? "")
              }
          })
+        
+        /*view.endEditing(true)
+        let loginManager = LoginManager()
+        loginManager.logOut()
+        let permission = ["public_profile","email"]
+        loginManager.logIn(permissions: permission, from: self) { (loginResult, error) in
+            if loginResult?.isCancelled ?? false { return }
+            var declinedPermissions = [String]()
+            loginResult?.declinedPermissions.forEach({ (string) in
+                declinedPermissions.append(string)
+            })
+            if declinedPermissions.count == 0 {
+                _ = GraphRequest (graphPath: "me?fields=id,name,email").start(completionHandler: { (requestConnection, object, error) in
+                    if error == nil {
+                        let objectDetails = JSON(object!)
+                        let id = objectDetails["id"].stringValue
+                        let email = objectDetails["email"].stringValue
+                        let name = objectDetails["name"].stringValue
+                        self.loginBySocial(name: name, id: id, email: email, type: "1")
+                        loginManager.logOut()
+                    }else {
+                        DispatchQueue.main.async {
+                            self.showAlert(msg: "Permission denied")
+                        }
+                    }
+                })
+            }else {
+                DispatchQueue.main.async {
+                    self.showAlert(msg: "Permission denied")
+                }
+            }
+        }*/
     }
     
     //MARK: Google Login Click
     @IBAction func btnGoogleLoginClick(sender: UIButton) {
+         view.endEditing(true)
          GIDSignIn.sharedInstance().delegate = self
          GIDSignIn.sharedInstance().uiDelegate = self
          GIDSignIn.sharedInstance().signIn()
