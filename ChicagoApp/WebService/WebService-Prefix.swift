@@ -31,6 +31,7 @@ struct APIConstants {
     static let FORGOTPWD = "\(APIServerConstants.BaseURL)forgot_password"
     static let RESETPWD = "\(APIServerConstants.BaseURL)reset_password"
     static let GetCategory = "\(APIServerConstants.BaseURL)get_category"
+    static let GetAllSubCategory = "\(APIServerConstants.BaseURL)get_parent_category"
     static let GetCategoryDetails = "\(APIServerConstants.BaseURL)get_profile"
     static let LoginByThirdParty = "\(APIServerConstants.BaseURL)login_by_thirdparty"
     static let ADDSHOP = "\(APIServerConstants.BaseURL)add_shop_detail"

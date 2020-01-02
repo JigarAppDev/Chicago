@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0443724B238A5344006571A9 /* ChicagoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04437249238A5344006571A9 /* ChicagoApp.xcdatamodeld */; };
 		0444A4B223897DE8009DDA41 /* LikedCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0444A4B123897DE8009DDA41 /* LikedCategoryViewController.swift */; };
+		04611C3F23BDF53100B66F4B /* SBPickerSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04611C3B23BDF53000B66F4B /* SBPickerSelector.xib */; };
+		04611C4023BDF53100B66F4B /* SBPickerSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 04611C3D23BDF53100B66F4B /* SBPickerSelector.m */; };
 		047EF0452379B933004B5CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047EF0442379B933004B5CC6 /* AppDelegate.swift */; };
 		047EF0472379B933004B5CC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047EF0462379B933004B5CC6 /* SceneDelegate.swift */; };
 		047EF0492379B933004B5CC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047EF0482379B933004B5CC6 /* ViewController.swift */; };
@@ -67,6 +69,10 @@
 /* Begin PBXFileReference section */
 		0443724A238A5344006571A9 /* ChicagoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChicagoApp.xcdatamodel; sourceTree = "<group>"; };
 		0444A4B123897DE8009DDA41 /* LikedCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedCategoryViewController.swift; sourceTree = "<group>"; };
+		04611C3B23BDF53000B66F4B /* SBPickerSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SBPickerSelector.xib; sourceTree = "<group>"; };
+		04611C3D23BDF53100B66F4B /* SBPickerSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPickerSelector.m; sourceTree = "<group>"; };
+		04611C3E23BDF53100B66F4B /* SBPickerSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPickerSelector.h; sourceTree = "<group>"; };
+		04611C4123BDF60300B66F4B /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		047EF0412379B933004B5CC6 /* Chicago Callsheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chicago Callsheet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		047EF0442379B933004B5CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		047EF0462379B933004B5CC6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +145,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04611C3923BDF53000B66F4B /* SBPickerSelector */ = {
+			isa = PBXGroup;
+			children = (
+				04611C3A23BDF53000B66F4B /* Resources */,
+				04611C3C23BDF53100B66F4B /* Source */,
+			);
+			path = SBPickerSelector;
+			sourceTree = "<group>";
+		};
+		04611C3A23BDF53000B66F4B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				04611C3B23BDF53000B66F4B /* SBPickerSelector.xib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		04611C3C23BDF53100B66F4B /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				04611C3D23BDF53100B66F4B /* SBPickerSelector.m */,
+				04611C3E23BDF53100B66F4B /* SBPickerSelector.h */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		047EF0382379B933004B5CC6 = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +207,7 @@
 				047EF04F2379B934004B5CC6 /* LaunchScreen.storyboard */,
 				047EF0522379B934004B5CC6 /* Info.plist */,
 				04437249238A5344006571A9 /* ChicagoApp.xcdatamodeld */,
+				04611C4123BDF60300B66F4B /* Header.h */,
 			);
 			path = ChicagoApp;
 			sourceTree = "<group>";
@@ -223,6 +256,7 @@
 		048F9EA9237C259800150D4A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				04611C3923BDF53000B66F4B /* SBPickerSelector */,
 				E2C202B723B342FF004B2300 /* JYToast.swift */,
 				048F9EAA237C259800150D4A /* Constant */,
 				048F9EAC237C259800150D4A /* Extentions */,
@@ -395,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				047EF0512379B934004B5CC6 /* LaunchScreen.storyboard in Resources */,
+				04611C3F23BDF53100B66F4B /* SBPickerSelector.xib in Resources */,
 				047EF04E2379B934004B5CC6 /* Assets.xcassets in Resources */,
 				047EF04C2379B933004B5CC6 /* Main.storyboard in Resources */,
 			);
@@ -480,6 +515,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04611C4023BDF53100B66F4B /* SBPickerSelector.m in Sources */,
 				E201434B23AB5DE8004A9B94 /* LoginViewController.swift in Sources */,
 				E2317CC223B0B3220024393A /* AddShopViewController.swift in Sources */,
 				047EF0782379BD4C004B5CC6 /* CategoryViewController.swift in Sources */,
@@ -696,7 +732,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chicagocallsheet.chicagocallsheet;
 				PRODUCT_NAME = "Chicago Callsheet";
-				PROVISIONING_PROFILE_SPECIFIER = Chicago_Dev_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = Chicago_Dev_Profile_new;
+				SWIFT_OBJC_BRIDGING_HEADER = ChicagoApp/Header.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -718,7 +755,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chicagocallsheet.chicagocallsheet;
 				PRODUCT_NAME = "Chicago Callsheet";
-				PROVISIONING_PROFILE_SPECIFIER = Chicago_Dev_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = Chicago_Dev_Profile_new;
+				SWIFT_OBJC_BRIDGING_HEADER = ChicagoApp/Header.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

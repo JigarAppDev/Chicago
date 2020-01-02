@@ -11,35 +11,87 @@ import SwiftyJSON
 import NVActivityIndicatorView
 import CoreLocation
 
-class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NVActivityIndicatorViewable {
-
+class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NVActivityIndicatorViewable, SBPickerSelectorDelegate {
+    
     @IBOutlet var shopImage: UIImageView!
     @IBOutlet var btnAddImage: UIButton!
     @IBOutlet var txtShopname: UITextField!
     @IBOutlet var txvAbout: UITextView!
     @IBOutlet var txtLocation: UITextField!
     @IBOutlet var txtMobile: UITextField!
-    @IBOutlet var txtEmail: UITextField!
-    
+    @IBOutlet var txtClientSubmission: UITextField!
+    @IBOutlet var txtWebSite: UITextField!
+    @IBOutlet var txtCategory: UITextField!
+    var selectedCatId = ""
     var ArrUploadFile = NSMutableArray()
     private var toast: JYToast!
     var lati = 0.0
     var longi = 0.0
+    var arrAllCategory = [JSON]()
+    var catArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.initUi()
-        self.txtShopname.becomeFirstResponder()
+        self.txtShopname.setLeftPaddingPoints(5)
+        self.txtCategory.setLeftPaddingPoints(5)
+        self.txtLocation.setLeftPaddingPoints(5)
+        self.txtWebSite.setLeftPaddingPoints(5)
+        self.txtClientSubmission.setLeftPaddingPoints(5)
+        self.txtMobile.setLeftPaddingPoints(5)
+        
+        self.getAllSubCategory()
     }
     
     private func initUi() {
         toast = JYToast.init()
     }
-
+    
     // MARK: - Back Click
     @IBAction func btnBackClick(sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func getAllSubCategory() {
+        let Url = String(format: APIConstants.GetAllSubCategory)
+        guard let serviceUrl = URL(string: Url) else { return }
+        var request = URLRequest(url: serviceUrl)
+        request.httpMethod = "POST"
+        //let paramString = "parent_category=0"
+        //request.httpBody = paramString.data(using: String.Encoding.utf8)
+        
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    let dataObj = json as! NSDictionary
+                    if dataObj.value(forKey: "status_code") as! Bool == true {
+                        print(dataObj)
+                    }
+                    let dataObj1 = JSON.init(json)
+                    if dataObj1["status_code"].boolValue == true {
+                        self.arrAllCategory.removeAll()
+                        self.arrAllCategory = dataObj1["info"].arrayValue
+                    }
+                    if self.arrAllCategory.count > 0 {
+                        self.catArray = [String]()
+                        for obj in self.arrAllCategory {
+                            self.catArray.append(obj["category_name"].stringValue)
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        //self.tblMainCat.reloadData()
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
     }
     
     func isValidated() -> Bool {
@@ -56,6 +108,11 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.showAlert(msg: "Please Enter Shopname!")
             }
             isFlag = false
+        } else if self.txtCategory.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Select Category!")
+            }
+            isFlag = false
         } else if self.txvAbout.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
             //self.toast.isShow("Please Enter About Info!")
             DispatchQueue.main.async {
@@ -65,7 +122,7 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
         } else if self.txtLocation.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
             //self.toast.isShow("Please Enter Location!")
             DispatchQueue.main.async {
-                self.showAlert(msg: "Please Enter Location!")
+                self.showAlert(msg: "Please Enter Your Full Address!")
             }
             isFlag = false
         } else if self.txtMobile.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
@@ -74,14 +131,50 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.showAlert(msg: "Please Enter Mobile Number!")
             }
             isFlag = false
-        } else if self.txtEmail.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+        } else if self.txtClientSubmission.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
             //self.toast.isShow("Please Enter Email!")
             DispatchQueue.main.async {
-                self.showAlert(msg: "Please Enter Email!")
+                self.showAlert(msg: "Please Enter Submission Link!")
+            }
+            isFlag = false
+        } else if self.txtWebSite.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            DispatchQueue.main.async {
+                self.showAlert(msg: "Please Enter Website Url!")
             }
             isFlag = false
         }
         return isFlag
+    }
+    
+    //MARK: Select Category
+    @IBAction func btnSelectCategory(sender: UIButton) {
+        self.view.endEditing(true)
+        let picker = SBPickerSelector()
+        picker.tag = 101
+        picker.delegate = self
+        picker.pickerType = SBPickerSelectorType.text
+        picker.pickerData = self.catArray
+        picker.doneButtonTitle = "Done"
+        picker.cancelButtonTitle = "Cancel"
+        picker.doneButton?.tintColor = .white
+        picker.cancelButton?.tintColor = .white
+        picker.pickerView.backgroundColor = .white
+        //picker.pickerView.setValue(UIColor.black, forKeyPath: "textColor")
+        picker.optionsToolBar?.barTintColor = UIColor(red: 85/255, green: 80/255, blue: 238/255, alpha: 1.0)
+        picker.showPickerOver(self)
+    }
+    
+    //MARK:- Picker delegate methods
+    func pickerSelector(_ selector: SBPickerSelector, selectedValues values: [String], atIndexes idxs: [NSNumber]) {
+        if selector.tag == 101 {
+            self.txtCategory.text = values[0]
+            let arr = self.arrAllCategory.filter { (obj) -> Bool in
+                obj["category_name"].stringValue == values[0]
+            }
+            if arr.count > 0 {
+                self.selectedCatId = arr[0]["category_id"].stringValue
+            }
+        }
     }
     
     //MARK: Submit Click
@@ -90,6 +183,13 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         self.view.endEditing(true)
+        var userId = ""
+        if let userObj = Defaults.value(forKey: "userDetail") {
+            userId = JSON.init(userObj)["user_id"].stringValue
+        } else {
+            self.showAlert(msg: "Please login to add shop!")
+            return
+        }
         self.startAnimating(Loadersize, message: "", type: NVActivityIndicatorType.ballSpinFadeLoader)
         let Url = String(format: APIConstants.ADDSHOP)
         guard let serviceUrl = URL(string: Url) else { return }
@@ -99,13 +199,13 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
         //let paramString = "shop_name=\(self.txtShopname.text!)&about=\(self.txvAbout.text!)&location=\(self.txtLocation.text!)&mobile_number=\(self.txtMobile.text!)&email=\(self.txtEmail.text!)&latitude=\(self.lati)&longitude=\(self.longi)"
         //request.httpBody = paramString.data(using: String.Encoding.utf8)
         
-        let paramString = [ "shop_name":self.txtShopname.text!,"about":self.txvAbout.text!,"location":self.txtLocation.text!,"mobile_number":self.txtMobile.text!,"email":self.txtEmail.text!,"latitude":"\(self.lati)","longitude":"\(self.longi)"] as [String : Any]
+        let paramString = [ "user_id":userId,"company_name":self.txtShopname.text!,"category_id":self.selectedCatId,"three_sentence_summary":self.txvAbout.text!,"address":self.txtLocation.text!,"phone":self.txtMobile.text!,"client_Subbmission_link":self.txtClientSubmission.text!,"website":self.txtWebSite.text!] as [String : Any]
         
         let boundary = generateBoundaryString()
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         let imageData = self.ArrUploadFile[0]
-        request.httpBody = createBodyWithParameters(parameters: paramString as? [String : String], filePathKey: "shop_image", imageDataKey: imageData as! NSData, boundary: boundary) as Data
-
+        request.httpBody = createBodyWithParameters(parameters: paramString as? [String : String], filePathKey: "profile_pic", imageDataKey: imageData as! NSData, boundary: boundary) as Data
+        
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
@@ -124,13 +224,12 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
                     let dataObj1 = JSON.init(json)
                     DispatchQueue.main.async {
                         let alert = UIAlertController(title: "Chicago Callsheet", message:dataObj1["msg"].stringValue, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: { (action) in
+                            if dataObj1["status_code"].intValue == 1 {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }))
                         self.present(alert, animated: true, completion: nil)
-                    }
-                    if dataObj1["status_code"].intValue == 1 {
-                        DispatchQueue.main.async {
-                            self.navigationController?.popViewController(animated: true)
-                        }
                     }
                     
                 } catch {
@@ -142,7 +241,7 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String) -> NSData {
         let body = NSMutableData();
-
+        
         if parameters != nil {
             for (key, value) in parameters! {
                 body.appendString(string:"--\(boundary)\r\n")
@@ -150,7 +249,7 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
                 body.appendString(string:"\(value)\r\n")
             }
         }
-
+        
         let filename = "shopimage.jpg"
         let mimetype = "image/jpg"
         body.appendString(string:"--\(boundary)\r\n")
@@ -159,10 +258,10 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
         body.append(imageDataKey as Data)
         body.appendString(string:"\r\n")
         body.appendString(string:"--\(boundary)--\r\n")
-
+        
         return body
     }
-
+    
     func generateBoundaryString() -> String {
         return "Boundary-\(NSUUID().uuidString)"
     }
@@ -224,22 +323,22 @@ class AddShopViewController: UIViewController, UIImagePickerControllerDelegate, 
         let geocoder: CLGeocoder = CLGeocoder()
         geocoder.geocodeAddressString(location, completionHandler: {(placemarks: [CLPlacemark]?, error: Error?) -> Void in
             self.stopAnimating()
-                //If no data
-                if placemarks == nil {
-                    //KSToastView.ks_showToast("Please Enter Valid ZipCode!", duration: ToastDuration)
-                    return
-                }
-                if ((placemarks?.count)! > 0) {
-                    let placemark: CLPlacemark = (placemarks?[0])!
-                    //let country : String = placemark.country!
-                    //let state: String = placemark.administrativeArea!
-                    //let city = placemark.locality!
-                    self.lati = Double((placemark.location?.coordinate.latitude)!)
-                    self.longi = Double((placemark.location?.coordinate.longitude)!)
-                    
-                } else {
-                    //KSToastView.ks_showToast("Please Enter Valid ZipCode!", duration: ToastDuration)
-                }
+            //If no data
+            if placemarks == nil {
+                //KSToastView.ks_showToast("Please Enter Valid ZipCode!", duration: ToastDuration)
+                return
+            }
+            if ((placemarks?.count)! > 0) {
+                let placemark: CLPlacemark = (placemarks?[0])!
+                //let country : String = placemark.country!
+                //let state: String = placemark.administrativeArea!
+                //let city = placemark.locality!
+                self.lati = Double((placemark.location?.coordinate.latitude)!)
+                self.longi = Double((placemark.location?.coordinate.longitude)!)
+                
+            } else {
+                //KSToastView.ks_showToast("Please Enter Valid ZipCode!", duration: ToastDuration)
+            }
             } as CLGeocodeCompletionHandler)
     }
     
