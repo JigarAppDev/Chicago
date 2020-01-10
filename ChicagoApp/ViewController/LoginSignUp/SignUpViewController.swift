@@ -12,20 +12,28 @@ import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
 import NVActivityIndicatorView
+import AuthenticationServices
 
-class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSignInDelegate, GIDSignInUIDelegate {
+class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSignInDelegate, GIDSignInUIDelegate, ASAuthorizationControllerDelegate {
     
     @IBOutlet var txtFullname: UITextField!
     @IBOutlet var txtEmail: UITextField!
     @IBOutlet var txtPassword: UITextField!
     @IBOutlet var txtConfirmPassword: UITextField!
     private var toast: JYToast!
+    @IBOutlet weak var appleView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.initUi()
         //self.txtFullname.becomeFirstResponder()
+        
+        if #available(iOS 13.0, *) {
+            self.setUpSignInAppleButtonInView()
+        } else {
+            // Fallback on earlier versions
+        }
     }
         
     private func initUi() {
@@ -291,5 +299,67 @@ class SignUpViewController: UIViewController, NVActivityIndicatorViewable, GIDSi
         let alert = UIAlertController(title: "Chicago Callsheet", message:msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: Apple Pay
+    @available(iOS 13.0, *)
+    func setUpSignInAppleButtonInView() {
+        let authorizationButton = ASAuthorizationAppleIDButton()
+        authorizationButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
+        //authorizationButton.cornerRadius = 10
+        self.appleView.addSubview(authorizationButton)
+    }
+    
+    @available(iOS 13.0, *)
+    @objc func handleAppleIdRequest() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.performRequests()
+    }
+    
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as?  ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            print("User id is \(userIdentifier) \n Full Name is \(String(describing: fullName)) \n Email id is \(String(describing: email))")
+         
+            //Authorise User
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
+                 switch credentialState {
+                    case .authorized:
+                        // The Apple ID credential is valid.
+                        DispatchQueue.main.async {
+                            self.loginBySocial(name: (fullName?.givenName)!, id: userIdentifier, email: email!, type: "3")
+                        }
+                        break
+                    case .revoked:
+                        // The Apple ID credential is revoked.
+                        DispatchQueue.main.async {
+                            self.showAlert(msg: "The Apple ID credential is revoked.")
+                        }
+                        break
+                    case .notFound:
+                        // No credential was found, so show the sign-in UI
+                        DispatchQueue.main.async {
+                            self.showAlert(msg: "No credential was found.")
+                        }
+                        break
+                    default:
+                        break
+                 }
+            }
+        }
+    }
+    
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error.
+        print(error)
     }
 }

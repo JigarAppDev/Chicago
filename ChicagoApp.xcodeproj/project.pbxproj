@@ -67,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040E004023C877130085F4FB /* Chicago Callsheet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Chicago Callsheet.entitlements"; sourceTree = "<group>"; };
 		0443724A238A5344006571A9 /* ChicagoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChicagoApp.xcdatamodel; sourceTree = "<group>"; };
 		0444A4B123897DE8009DDA41 /* LikedCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedCategoryViewController.swift; sourceTree = "<group>"; };
 		04611C3B23BDF53000B66F4B /* SBPickerSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SBPickerSelector.xib; sourceTree = "<group>"; };
@@ -196,6 +197,7 @@
 		047EF0432379B933004B5CC6 /* ChicagoApp */ = {
 			isa = PBXGroup;
 			children = (
+				040E004023C877130085F4FB /* Chicago Callsheet.entitlements */,
 				048F9EA9237C259800150D4A /* Utilities */,
 				048F9E9D237C259800150D4A /* WebService */,
 				047EF0742379BAD4004B5CC6 /* ViewController */,
@@ -721,6 +723,7 @@
 			baseConfigurationReference = DA6AF806316A51DD91A5B3C1 /* Pods-ChicagoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ChicagoApp/Chicago Callsheet.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7DLPQZS6M4;
@@ -744,6 +747,7 @@
 			baseConfigurationReference = D9719CE9940A8E32A207814B /* Pods-ChicagoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ChicagoApp/Chicago Callsheet.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7DLPQZS6M4;
